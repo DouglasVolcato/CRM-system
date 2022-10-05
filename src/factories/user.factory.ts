@@ -3,7 +3,7 @@ import { UserRepository } from "../repositories/user.repository";
 import { UserRoutes } from "../routes/user.routes";
 import * as services from "../services/user.services.index";
 
-export function makeUserFactory(router: any) {
+export function makeUserFactory(router: string, req: any, res: any) {
   const userRepository = new UserRepository();
 
   const createUserUsecase = new services.CreateUserUsecase(userRepository);
@@ -22,7 +22,7 @@ export function makeUserFactory(router: any) {
     updateUserUseCase,
   });
 
-  const userRoutes = new UserRoutes(userController, router);
+  const userRoutes = new UserRoutes(userController, router, req, res);
 
-  return userRoutes;
+  return userRoutes.route();
 }

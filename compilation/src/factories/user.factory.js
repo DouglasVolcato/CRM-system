@@ -28,7 +28,7 @@ const user_controller_1 = require("../controllers/user.controller");
 const user_repository_1 = require("../repositories/user.repository");
 const user_routes_1 = require("../routes/user.routes");
 const services = __importStar(require("../services/user.services.index"));
-function makeUserFactory(router) {
+function makeUserFactory(router, req, res) {
     const userRepository = new user_repository_1.UserRepository();
     const createUserUsecase = new services.CreateUserUsecase(userRepository);
     const deleteUserUsecase = new services.DeleteUserUsecase(userRepository);
@@ -42,7 +42,7 @@ function makeUserFactory(router) {
         getUserByNameUseCase,
         updateUserUseCase,
     });
-    const userRoutes = new user_routes_1.UserRoutes(userController, router);
-    return userRoutes;
+    const userRoutes = new user_routes_1.UserRoutes(userController, router, req, res);
+    return userRoutes.route();
 }
 exports.makeUserFactory = makeUserFactory;
