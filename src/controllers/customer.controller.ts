@@ -8,40 +8,40 @@ export class CustomerController {
     this.services = services;
   }
 
-  createUserController(req: { body: CustomerInterface }, res: any) {
+  createCustomerController(req: { body: CustomerInterface }, res: any) {
     const body = req.body;
-    const newCustomer = this.services.CreateCustomerUseCase.execute(body);
-    res.send(newCustomer);
+    const newCustomer = this.services.createCustomerUseCase.execute(body);
+    return res.send(newCustomer);
   }
 
-  deleteUserController(req: { params: { id: string } }, res: any) {
+  deleteCustomerController(req: { params: { id: string } }, res: any) {
     const id = Number(req.params.id);
-    const deletedCustomer = this.services.DeleteCustomerUseCase.execute(id);
-    res.send(deletedCustomer);
+    const deletedCustomer = this.services.deleteCustomerUseCase.execute(id);
+    return res.send(deletedCustomer);
   }
 
-  getUserByIdController(req: { params: { id: string } }, res: any) {
+  getCustomerByIdController(req: { params: { id: string } }, res: any) {
     const id = Number(req.params.id);
-    const foundCustomer = this.services.GetCustomerByIdUseCase.execute(id);
-    res.send(foundCustomer);
+    const foundCustomer = this.services.getCustomerByIdUseCase.execute(id);
+    return res.send(foundCustomer);
   }
 
-  getUserByNameController(req: { params: { name: string } }, res: any) {
+  getCustomerByNameController(req: { params: { name: string } }, res: any) {
     const name = req.params.name;
-    const foundCustomer = this.services.GetCustomerByNameUseCase.execute(name);
-    res.send(foundCustomer);
+    const foundCustomer = this.services.getCustomerByNameUseCase.execute(name);
+    return res.send(foundCustomer);
   }
 
-  updateUserController(
+  updateCustomerController(
     req: { params: { id: string }; body: CustomerInterface },
     res: any
   ) {
     const id = Number(req.params.id);
     const body = req.body;
-    const updatedCustomer = this.services.UpdateCustomerUseCase.execute(
+    const updatedCustomer = this.services.updateCustomerUseCase.execute(
       id,
       body
     );
-    res.send(updatedCustomer);
+    return res.send(updatedCustomer);
   }
 }
