@@ -1,5 +1,4 @@
 import { UserServicesInterface } from "../interfaces/services.interfaces/user.services.interface";
-import { UserInterface } from "../interfaces/entities.interfaces/user.interface";
 
 export class UserController {
   services: UserServicesInterface;
@@ -8,37 +7,73 @@ export class UserController {
     this.services = services;
   }
 
-  createUserController(req: { body: UserInterface }, res: any) {
-    const body = req.body;
-    const newUser = this.services.createUserUsecase.execute(body);
-    return res.send(newUser);
+  createUserController(req: any, res: any) {
+    let body = "";
+
+    req.on("data", (chunk: any) => {
+      body += chunk.toString();
+    });
+
+    return req.on("end", async () => {
+      const { id, name, username, email, password } = await JSON.parse(body);
+
+      const userObj = {
+        id,
+        name,
+        username,
+        email,
+        password,
+      };
+
+      const newUser = this.services.createUserUsecase.execute(userObj);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(newUser));
+    });
   }
 
-  deleteUserController(req: { params: { id: string } }, res: any) {
-    const id = Number(req.params.id);
+  deleteUserController(req: any, res: any) {
+    const id = Number(req.url.replace("/users/delete-user/", ""));
     const deletedUser = this.services.deleteUserUsecase.execute(id);
-    return res.send(deletedUser);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(deletedUser));
   }
 
-  getUserByIdController(req: { params: { id: string } }, res: any) {
-    const id = Number(req.params.id);
+  getUserByIdController(req: any, res: any) {
+    const id = Number(req.url.replace("/users/find-user-by-id/", ""));
     const foundUser = this.services.getUserByIdUseCase.execute(id);
-    return res.send(foundUser);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(foundUser));
   }
 
-  getUserByNameController(req: { params: { name: string } }, res: any) {
-    const name = req.params.name;
+  getUserByNameController(req: any, res: any) {
+    const name = req.url.replace("/users/find-user-by-name/", "");
     const foundUser = this.services.getUserByNameUseCase.execute(name);
-    return res.send(foundUser);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(foundUser));
   }
 
-  updateUserController(
-    req: { params: { id: string }; body: UserInterface },
-    res: any
-  ) {
-    const id = Number(req.params.id);
-    const body = req.body;
-    const updatedUser = this.services.updateUserUseCase.execute(id, body);
-    return res.send(updatedUser);
+  updateUserController(req: any, res: any) {
+    let body = "";
+
+    req.on("data", (chunk: any) => {
+      body += chunk.toString();
+    });
+
+    return req.on("end", async () => {
+      const { id, name, username, email, password } = await JSON.parse(body);
+
+      const userObj = {
+        id,
+        name,
+        username,
+        email,
+        password,
+      };
+
+      const updatedUser = this.services.updateUserUseCase.execute(id, userObj);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(updatedUser));
+    });
   }
 }
