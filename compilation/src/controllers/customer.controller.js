@@ -5,31 +5,31 @@ class CustomerController {
     constructor(services) {
         this.services = services;
     }
-    createUserController(req, res) {
+    createCustomerController(req, res) {
         const body = req.body;
-        const newCustomer = this.services.CreateCustomerUseCase.execute(body);
-        res.send(newCustomer);
+        const newCustomer = this.services.createCustomerUseCase.execute(body);
+        return res.send(newCustomer);
     }
-    deleteUserController(req, res) {
+    deleteCustomerController(req, res) {
         const id = Number(req.params.id);
-        const deletedCustomer = this.services.DeleteCustomerUseCase.execute(id);
-        res.send(deletedCustomer);
+        const deletedCustomer = this.services.deleteCustomerUseCase.execute(id);
+        return res.send(deletedCustomer);
     }
-    getUserByIdController(req, res) {
+    getCustomerByIdController(req, res) {
         const id = Number(req.params.id);
-        const foundCustomer = this.services.GetCustomerByIdUseCase.execute(id);
-        res.send(foundCustomer);
+        const foundCustomer = this.services.getCustomerByIdUseCase.execute(id);
+        return res.send(foundCustomer);
     }
-    getUserByNameController(req, res) {
+    getCustomerByNameController(req, res) {
         const name = req.params.name;
-        const foundCustomer = this.services.GetCustomerByNameUseCase.execute(name);
-        res.send(foundCustomer);
+        const foundCustomer = this.services.getCustomerByNameUseCase.execute(name);
+        return res.send(foundCustomer);
     }
-    updateUserController(req, res) {
+    updateCustomerController(req, res) {
         const id = Number(req.params.id);
         const body = req.body;
-        const updatedCustomer = this.services.UpdateCustomerUseCase.execute(id, body);
-        res.send(updatedCustomer);
+        const updatedCustomer = this.services.updateCustomerUseCase.execute(id, body);
+        return res.send(updatedCustomer);
     }
 }
 exports.CustomerController = CustomerController;

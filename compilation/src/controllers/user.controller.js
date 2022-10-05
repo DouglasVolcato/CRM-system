@@ -7,29 +7,29 @@ class UserController {
     }
     createUserController(req, res) {
         const body = req.body;
-        const newUser = this.services.CreateUserUsecase.execute(body);
-        res.send(newUser);
+        const newUser = this.services.createUserUsecase.execute(body);
+        return res.send(newUser);
     }
     deleteUserController(req, res) {
         const id = Number(req.params.id);
-        const deletedUser = this.services.DeleteUserUsecase.execute(id);
-        res.send(deletedUser);
+        const deletedUser = this.services.deleteUserUsecase.execute(id);
+        return res.send(deletedUser);
     }
     getUserByIdController(req, res) {
         const id = Number(req.params.id);
-        const foundUser = this.services.GetUserByIdUseCase.execute(id);
-        res.send(foundUser);
+        const foundUser = this.services.getUserByIdUseCase.execute(id);
+        return res.send(foundUser);
     }
     getUserByNameController(req, res) {
         const name = req.params.name;
-        const foundUser = this.services.GetUserByNameUseCase.execute(name);
-        res.send(foundUser);
+        const foundUser = this.services.getUserByNameUseCase.execute(name);
+        return res.send(foundUser);
     }
     updateUserController(req, res) {
         const id = Number(req.params.id);
         const body = req.body;
-        const updatedUser = this.services.UpdateUserUseCase.execute(id, body);
-        res.send(updatedUser);
+        const updatedUser = this.services.updateUserUseCase.execute(id, body);
+        return res.send(updatedUser);
     }
 }
 exports.UserController = UserController;
