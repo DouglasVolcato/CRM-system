@@ -1,23 +1,23 @@
 import { UserInterface } from "../entities.interfaces/user.interface";
 
 export interface UserServicesInterface {
-  CreateUserUsecase: {
+  createUserUsecase: {
     execute(userBody: UserInterface): { message: string };
   };
 
-  DeleteUserUsecase: {
+  deleteUserUsecase: {
     execute(userId: number): { message: string };
   };
 
-  GetUserByIdUseCase: {
+  getUserByIdUseCase: {
     execute(userId: number): UserInterface[];
   };
 
-  GetUserByNameUseCase: {
+  getUserByNameUseCase: {
     execute(userName: string): UserInterface[];
   };
 
-  UpdateUserUseCase: {
+  updateUserUseCase: {
     execute(userId: number, userBody: UserInterface): { message: string };
   };
 }
