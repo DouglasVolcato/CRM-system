@@ -1,9 +1,3 @@
-interface Users {
-  list: {
-    username: string;
-    email: string;
-    password: string;
-  }[];
-}
+import { UserInterface } from "../interfaces/entities.interfaces/user.interface";
 
-const users: Users = { list: [] };
+export const users: UserInterface[] = [];
