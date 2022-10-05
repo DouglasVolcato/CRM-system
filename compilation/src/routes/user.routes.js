@@ -2,16 +2,36 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserRoutes = void 0;
 class UserRoutes {
-    constructor(controller, router) {
+    constructor(controller, router, req, res) {
         this.controller = controller;
         this.router = router;
+        this.req = req;
+        this.res = res;
     }
     route() {
-        this.router.post("/create-user", (req, res) => this.controller.createUserController(req, res));
-        this.router.delete("/delete-user/:id", (req, res) => this.controller.deleteUserController(req, res));
-        this.router.get("/get-user-by-id/:id", (req, res) => this.controller.getUserByIdController(req, res));
-        this.router.get("/get-user-by-name/:name", (req, res) => this.controller.getUserByNameController(req, res));
-        this.router.put("/update-user/:id", (req, res) => this.controller.updateUserController(req, res));
+        if (this.router === "/users/create-user" && this.req.method === "POST") {
+            this.controller.createUserController(this.req, this.res);
+        }
+        else if (this.router.includes("/users/delete-user/") &&
+            this.req.method === "DELETE") {
+            this.controller.deleteUserController(this.req, this.res);
+        }
+        else if (this.router.includes("/users/find-user-by-id/") &&
+            this.req.method === "GET") {
+            this.controller.getUserByIdController(this.req, this.res);
+        }
+        else if (this.router.includes("/users/find-user-by-name/") &&
+            this.req.method === "GET") {
+            this.controller.getUserByNameController(this.req, this.res);
+        }
+        else if (this.router.includes("/users/update-user/") &&
+            this.req.method === "PUT") {
+            this.controller.updateUserController(this.req, this.res);
+        }
+        else {
+            this.res.writeHead(400, { "Content-Type": "application/json" });
+            this.res.end(JSON.stringify({ message: "Route not found" }));
+        }
     }
 }
 exports.UserRoutes = UserRoutes;
