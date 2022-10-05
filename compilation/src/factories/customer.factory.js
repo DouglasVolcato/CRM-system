@@ -28,7 +28,7 @@ const customer_controller_1 = require("../controllers/customer.controller");
 const customer_repository_1 = require("../repositories/customer.repository");
 const customer_routes_1 = require("../routes/customer.routes");
 const services = __importStar(require("../services/customer.services.index"));
-function makeCustomerFactory(router) {
+function makeCustomerFactory(router, req, res) {
     const customerRepository = new customer_repository_1.CustomerRepository();
     const createCustomerUseCase = new services.CreateCustomerUseCase(customerRepository);
     const deleteCustomerUseCase = new services.DeleteCustomerUseCase(customerRepository);
@@ -42,7 +42,7 @@ function makeCustomerFactory(router) {
         getCustomerByNameUseCase,
         updateCustomerUseCase,
     });
-    const customerRoutes = new customer_routes_1.CustomerRoutes(customerController, router);
+    const customerRoutes = new customer_routes_1.CustomerRoutes(customerController, router, req, res);
     return customerRoutes;
 }
 exports.makeCustomerFactory = makeCustomerFactory;
