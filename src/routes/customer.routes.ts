@@ -1,44 +1,52 @@
 import { CustomerControllerInterface } from "../interfaces/controllers.interfaces/customer.controller.interface";
-import { CustomerInterface } from "../interfaces/entities.interfaces/customer.interface";
 
 export class CustomerRoutes {
   controller: CustomerControllerInterface;
   router: any;
+  req: any;
+  res: any;
 
-  constructor(controller: CustomerControllerInterface, router: any) {
+  constructor(
+    controller: CustomerControllerInterface,
+    router: any,
+    req: any,
+    res: any
+  ) {
     this.controller = controller;
     this.router = router;
+    this.req = req;
+    this.res = res;
   }
 
   route() {
-    this.router.post(
-      "/create-customer",
-      (req: { body: CustomerInterface }, res: any) =>
-        this.controller.createCustomerController(req, res)
-    );
-
-    this.router.delete(
-      "/delete-customer/:id",
-      (req: { params: { id: string } }, res: any) =>
-        this.controller.deleteCustomerController(req, res)
-    );
-
-    this.router.get(
-      "/get-customer-by-id/:id",
-      (req: { params: { id: string } }, res: any) =>
-        this.controller.getCustomerByIdController(req, res)
-    );
-
-    this.router.get(
-      "/get-customer-by-name/:name",
-      (req: { params: { name: string } }, res: any) =>
-        this.controller.getCustomerByNameController(req, res)
-    );
-
-    this.router.put(
-      "/update-customer/:id",
-      (req: { params: { id: string }; body: CustomerInterface }, res: any) =>
-        this.controller.updateCustomerController(req, res)
-    );
+    if (
+      this.router === "/customers/create-customer" &&
+      this.req.method === "POST"
+    ) {
+      this.controller.createCustomerController(this.req, this.res);
+    } else if (
+      this.router.includes("/customers/delete-customer/") &&
+      this.req.method === "DELETE"
+    ) {
+      this.controller.deleteCustomerController(this.req, this.res);
+    } else if (
+      this.router.includes("/customers/find-customer-by-id/") &&
+      this.req.method === "GET"
+    ) {
+      this.controller.getCustomerByIdController(this.req, this.res);
+    } else if (
+      this.router.includes("/customers/find-customer-by-name/") &&
+      this.req.method === "GET"
+    ) {
+      this.controller.getCustomerByNameController(this.req, this.res);
+    } else if (
+      this.router.includes("/customers/update-customer/") &&
+      this.req.method === "PUT"
+    ) {
+      this.controller.updateCustomerController(this.req, this.res);
+    } else {
+      this.res.writeHead(400, { "Content-Type": "application/json" });
+      this.res.end(JSON.stringify({ message: "Route not found" }));
+    }
   }
 }

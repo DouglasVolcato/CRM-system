@@ -2,16 +2,37 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerRoutes = void 0;
 class CustomerRoutes {
-    constructor(controller, router) {
+    constructor(controller, router, req, res) {
         this.controller = controller;
         this.router = router;
+        this.req = req;
+        this.res = res;
     }
     route() {
-        this.router.post("/create-customer", (req, res) => this.controller.createCustomerController(req, res));
-        this.router.delete("/delete-customer/:id", (req, res) => this.controller.deleteCustomerController(req, res));
-        this.router.get("/get-customer-by-id/:id", (req, res) => this.controller.getCustomerByIdController(req, res));
-        this.router.get("/get-customer-by-name/:name", (req, res) => this.controller.getCustomerByNameController(req, res));
-        this.router.put("/update-customer/:id", (req, res) => this.controller.updateCustomerController(req, res));
+        if (this.router === "/customers/create-customer" &&
+            this.req.method === "POST") {
+            this.controller.createCustomerController(this.req, this.res);
+        }
+        else if (this.router.includes("/customers/delete-customer/") &&
+            this.req.method === "DELETE") {
+            this.controller.deleteCustomerController(this.req, this.res);
+        }
+        else if (this.router.includes("/customers/find-customer-by-id/") &&
+            this.req.method === "GET") {
+            this.controller.getCustomerByIdController(this.req, this.res);
+        }
+        else if (this.router.includes("/customers/find-customer-by-name/") &&
+            this.req.method === "GET") {
+            this.controller.getCustomerByNameController(this.req, this.res);
+        }
+        else if (this.router.includes("/customers/update-customer/") &&
+            this.req.method === "PUT") {
+            this.controller.updateCustomerController(this.req, this.res);
+        }
+        else {
+            this.res.writeHead(400, { "Content-Type": "application/json" });
+            this.res.end(JSON.stringify({ message: "Route not found" }));
+        }
     }
 }
 exports.CustomerRoutes = CustomerRoutes;
