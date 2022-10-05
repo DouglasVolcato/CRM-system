@@ -1,4 +1,5 @@
 import { CustomerInterface } from "../entities.interfaces/customer.interface";
+
 export interface CustomerServicesInterface {
   createCustomerUseCase: {
     execute(customerBody: CustomerInterface): { message: string };
