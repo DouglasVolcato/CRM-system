@@ -1,22 +1,22 @@
 import { CustomerInterface } from "../entities.interfaces/customer.interface";
 export interface CustomerServicesInterface {
-  CreateCustomerUseCase: {
+  createCustomerUseCase: {
     execute(customerBody: CustomerInterface): { message: string };
   };
 
-  DeleteCustomerUseCase: {
+  deleteCustomerUseCase: {
     execute(customerId: number): { message: string };
   };
 
-  GetCustomerByIdUseCase: {
+  getCustomerByIdUseCase: {
     execute(customerId: number): CustomerInterface[];
   };
 
-  GetCustomerByNameUseCase: {
+  getCustomerByNameUseCase: {
     execute(customerName: string): CustomerInterface[];
   };
 
-  UpdateCustomerUseCase: {
+  updateCustomerUseCase: {
     execute(
       customerId: number,
       customerBody: CustomerInterface
