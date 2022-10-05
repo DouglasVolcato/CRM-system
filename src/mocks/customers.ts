@@ -1,12 +1,3 @@
-interface Customers {
-  list: {
-    id: number;
-    name: string;
-    age: number;
-    phone: number;
-    city: string;
-    notes: string;
-  }[];
-}
+import { CustomerInterface } from "../interfaces/entities.interfaces/customer.interface";
 
-const customers: Customers = { list: [] };
+export const customers: CustomerInterface[] = [];
