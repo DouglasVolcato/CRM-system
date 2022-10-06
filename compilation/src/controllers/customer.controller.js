@@ -35,22 +35,28 @@ class CustomerController {
         }));
     }
     deleteCustomerController(req, res) {
-        const id = Number(req.url.replace("/users/delete-user/", ""));
+        var _a;
+        const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", ""));
         const deletedCustomer = this.services.deleteCustomerUseCase.execute(id);
         res.writeHead(200, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(deletedCustomer));
     }
     getCustomerByIdController(req, res) {
-        const id = Number(req.url.replace("/users/find-user-by-id/", ""));
+        var _a;
+        const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", ""));
         const foundCustomer = this.services.getCustomerByIdUseCase.execute(id);
         res.writeHead(200, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(foundCustomer));
     }
     getCustomerByNameController(req, res) {
-        const name = req.url.replace("/users/find-user-by-name/", "");
-        const foundCustomer = this.services.getCustomerByNameUseCase.execute(name);
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(foundCustomer));
+        if (req.url) {
+            const name = req.url.replace("/users/find-user-by-name/", "");
+            const foundCustomer = this.services.getCustomerByNameUseCase.execute(name);
+            res.writeHead(200, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify(foundCustomer));
+        }
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end({ message: "Invalid url." });
     }
     updateCustomerController(req, res) {
         let body = "";
