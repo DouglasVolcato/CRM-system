@@ -1,16 +1,17 @@
 import { UserControllerInterface } from "../interfaces/controllers.interfaces/user.controller.interface";
+import * as http from "http";
 
 export class UserRoutes {
   controller: UserControllerInterface;
   router: string;
-  req: any;
-  res: any;
+  req: http.IncomingMessage;
+  res: http.ServerResponse;
 
   constructor(
     controller: UserControllerInterface,
     router: string,
-    req: any,
-    res: any
+    req: http.IncomingMessage,
+    res: http.ServerResponse
   ) {
     this.controller = controller;
     this.router = router;
