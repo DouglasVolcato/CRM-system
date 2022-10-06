@@ -23,25 +23,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const customer_factory_1 = require("./src/factories/customer.factory");
-const user_factory_1 = require("./src/factories/user.factory");
-const envVariables_1 = require("./src/config/envVariables");
-const http = __importStar(require("http"));
-const { port, encryptKey } = (0, envVariables_1.envVariables)();
-const server = http.createServer((req, res) => {
-    const router = req.url;
-    if (router === null || router === void 0 ? void 0 : router.includes("/users/")) {
-        (0, user_factory_1.makeUserFactory)(router, req, res);
-    }
-    else if (router === null || router === void 0 ? void 0 : router.includes("/customers/")) {
-        (0, customer_factory_1.makeCustomerFactory)(router, req, res);
-    }
-    else {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Route not found" }));
-    }
-});
-// console.log(port, encryptKey);
-server
-    .listen(3000, () => console.log("http://localhost:" + port))
-    .on("error", (err) => console.log(err));
+exports.envVariables = void 0;
+const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
+const parseEnvBuffer_1 = require("../helpers/parseEnvBuffer");
+const envVariables = () => {
+    const envFilePath = path.join(".env");
+    const bufferEnv = fs.readFileSync(envFilePath);
+    const envObject = (0, parseEnvBuffer_1.parseBuffer)(bufferEnv);
+    const encryptKey = envObject.ENCRYPT_KEY || "SecretKey8500$&%";
+    const port = envObject.PORT || 5000;
+    return {
+        encryptKey,
+        port,
+    };
+};
+exports.envVariables = envVariables;
