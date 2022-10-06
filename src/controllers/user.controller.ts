@@ -8,7 +8,7 @@ export class UserController {
     this.services = services;
   }
 
-  createUserController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async createUserController(req: http.IncomingMessage, res: http.ServerResponse) {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -26,31 +26,31 @@ export class UserController {
         password,
       };
 
-      const newUser = this.services.createUserUsecase.execute(userObj);
+      const newUser = await this.services.createUserUsecase.execute(userObj);
 
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(newUser));
     });
   }
 
-  deleteUserController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async deleteUserController(req: http.IncomingMessage, res: http.ServerResponse) {
     const id = Number(req.url?.replace("/users/delete-user/", ""));
-    const deletedUser = this.services.deleteUserUsecase.execute(id);
+    const deletedUser = await this.services.deleteUserUsecase.execute(id);
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(deletedUser));
   }
 
-  getUserByIdController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async getUserByIdController(req: http.IncomingMessage, res: http.ServerResponse) {
     const id = Number(req.url?.replace("/users/find-user-by-id/", ""));
-    const foundUser = this.services.getUserByIdUseCase.execute(id);
+    const foundUser = await this.services.getUserByIdUseCase.execute(id);
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(foundUser));
   }
 
-  getUserByNameController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async getUserByNameController(req: http.IncomingMessage, res: http.ServerResponse) {
     if (req.url) {
       const name = req.url?.replace("/users/find-user-by-name/", "");
-      const foundUser = this.services.getUserByNameUseCase.execute(name);
+      const foundUser = await this.services.getUserByNameUseCase.execute(name);
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(foundUser));
     }
@@ -58,7 +58,7 @@ export class UserController {
     return res.end({ message: "Invalid url." });
   }
 
-  updateUserController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async updateUserController(req: http.IncomingMessage, res: http.ServerResponse) {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -76,7 +76,7 @@ export class UserController {
         password,
       };
 
-      const updatedUser = this.services.updateUserUseCase.execute(id, userObj);
+      const updatedUser = await this.services.updateUserUseCase.execute(id, userObj);
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(updatedUser));
     });
