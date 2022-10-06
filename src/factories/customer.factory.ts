@@ -1,9 +1,14 @@
 import { CustomerController } from "../controllers/customer.controller";
+import * as http from "http";
 import { CustomerRepository } from "../repositories/customer.repository";
 import { CustomerRoutes } from "../routes/customer.routes";
 import * as services from "../services/customer.services.index";
 
-export function makeCustomerFactory(router: string, req: any, res: any) {
+export function makeCustomerFactory(
+  router: string,
+  req: http.IncomingMessage,
+  res: http.ServerResponse
+) {
   const customerRepository = new CustomerRepository();
 
   const createCustomerUseCase = new services.CreateCustomerUseCase(
@@ -30,7 +35,12 @@ export function makeCustomerFactory(router: string, req: any, res: any) {
     updateCustomerUseCase,
   });
 
-  const customerRoutes = new CustomerRoutes(customerController, router, req, res);
+  const customerRoutes = new CustomerRoutes(
+    customerController,
+    router,
+    req,
+    res
+  );
 
   return customerRoutes;
 }

@@ -1,28 +1,29 @@
 import { CustomerInterface } from "../entities.interfaces/customer.interface";
+import * as http from "http";
 
 export interface CustomerControllerInterface {
   createCustomerController(
-    req: { body: CustomerInterface },
-    res: any
-  ): { message: string };
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.IncomingMessage;
 
   deleteCustomerController(
-    req: { params: { id: string } },
-    res: any
-  ): { message: string };
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.ServerResponse;
 
   getCustomerByIdController(
-    req: { params: { id: string } },
-    res: any
-  ): CustomerInterface[];
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.ServerResponse;
 
   getCustomerByNameController(
-    req: { params: { name: string } },
-    res: any
-  ): CustomerInterface[];
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.ServerResponse;
 
   updateCustomerController(
-    req: { params: { id: string }; body: CustomerInterface },
-    res: any
-  ): { message: string };
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.IncomingMessage;
 }

@@ -1,28 +1,28 @@
 import { UserInterface } from "../entities.interfaces/user.interface";
-
+import * as http from "http";
 export interface UserControllerInterface {
   createUserController(
-    req: { body: UserInterface },
-    res: any
-  ): { message: string };
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.IncomingMessage;
 
   deleteUserController(
-    req: { params: { id: string } },
-    res: any
-  ): { message: string };
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.ServerResponse;
 
   getUserByIdController(
-    req: { params: { id: string } },
-    res: any
-  ): UserInterface[];
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.ServerResponse;
 
   getUserByNameController(
-    req: { params: { name: string } },
-    res: any
-  ): UserInterface[];
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.ServerResponse;
 
   updateUserController(
-    req: { params: { id: string }; body: UserInterface },
-    res: any
-  ): { message: string };
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): http.IncomingMessage;
 }

@@ -1,9 +1,14 @@
 import { UserController } from "../controllers/user.controller";
+import * as http from "http";
 import { UserRepository } from "../repositories/user.repository";
 import { UserRoutes } from "../routes/user.routes";
 import * as services from "../services/user.services.index";
 
-export function makeUserFactory(router: string, req: any, res: any) {
+export function makeUserFactory(
+  router: string,
+  req: http.IncomingMessage,
+  res: http.ServerResponse
+) {
   const userRepository = new UserRepository();
 
   const createUserUsecase = new services.CreateUserUsecase(userRepository);
