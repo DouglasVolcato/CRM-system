@@ -8,6 +8,9 @@ export class GetCustomerByIdUseCase {
   }
 
   execute(customerId: number) {
-    return this.repository.getCustomerById(customerId);
+    return new Promise((resolve) => {
+      const foundCustomer = this.repository.getCustomerById(customerId);
+      resolve(foundCustomer);
+    });
   }
 }
