@@ -9,6 +9,9 @@ export class CreateCustomerUseCase {
   }
 
   execute(customerBody: CustomerInterface) {
-    return this.repository.createCustomer(customerBody);
+    return new Promise((resolve) => {
+      const createCustomer = this.repository.createCustomer(customerBody);
+      resolve(createCustomer);
+    });
   }
 }
