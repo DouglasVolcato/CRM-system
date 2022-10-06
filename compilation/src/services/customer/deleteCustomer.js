@@ -6,7 +6,10 @@ class DeleteCustomerUseCase {
         this.repository = repository;
     }
     execute(customerId) {
-        return this.repository.deleteCustomer(customerId);
+        return new Promise((resolve) => {
+            const deletedCustomer = this.repository.deleteCustomer(customerId);
+            resolve(deletedCustomer);
+        });
     }
 }
 exports.DeleteCustomerUseCase = DeleteCustomerUseCase;

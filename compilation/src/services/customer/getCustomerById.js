@@ -6,7 +6,10 @@ class GetCustomerByIdUseCase {
         this.repository = repository;
     }
     execute(customerId) {
-        return this.repository.getCustomerById(customerId);
+        return new Promise((resolve) => {
+            const foundCustomer = this.repository.getCustomerById(customerId);
+            resolve(foundCustomer);
+        });
     }
 }
 exports.GetCustomerByIdUseCase = GetCustomerByIdUseCase;

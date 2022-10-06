@@ -6,7 +6,10 @@ class CreateCustomerUseCase {
         this.repository = repository;
     }
     execute(customerBody) {
-        return this.repository.createCustomer(customerBody);
+        return new Promise((resolve) => {
+            const createCustomer = this.repository.createCustomer(customerBody);
+            resolve(createCustomer);
+        });
     }
 }
 exports.CreateCustomerUseCase = CreateCustomerUseCase;

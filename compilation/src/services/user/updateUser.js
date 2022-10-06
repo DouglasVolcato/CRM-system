@@ -6,7 +6,10 @@ class UpdateUserUseCase {
         this.repository = repository;
     }
     execute(userId, userBody) {
-        return this.repository.updateUser(userId, userBody);
+        return new Promise((resolve) => {
+            const updatedUser = this.repository.updateUser(userId, userBody);
+            resolve(updatedUser);
+        });
     }
 }
 exports.UpdateUserUseCase = UpdateUserUseCase;

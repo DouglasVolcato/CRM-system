@@ -6,7 +6,10 @@ class CreateUserUsecase {
         this.repository = repository;
     }
     execute(userBody) {
-        return this.repository.createUser(userBody);
+        return new Promise((resolve) => {
+            const newUser = this.repository.createUser(userBody);
+            resolve(newUser);
+        });
     }
 }
 exports.CreateUserUsecase = CreateUserUsecase;

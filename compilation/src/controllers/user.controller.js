@@ -15,67 +15,77 @@ class UserController {
         this.services = services;
     }
     createUserController(req, res) {
-        let body = "";
-        req.on("data", (chunk) => {
-            body += chunk.toString();
+        return __awaiter(this, void 0, void 0, function* () {
+            let body = "";
+            req.on("data", (chunk) => {
+                body += chunk.toString();
+            });
+            return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
+                const { id, name, username, email, password } = yield JSON.parse(body);
+                const userObj = {
+                    id,
+                    name,
+                    username,
+                    email,
+                    password,
+                };
+                const newUser = yield this.services.createUserUsecase.execute(userObj);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(newUser));
+            }));
         });
-        return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
-            const { id, name, username, email, password } = yield JSON.parse(body);
-            const userObj = {
-                id,
-                name,
-                username,
-                email,
-                password,
-            };
-            const newUser = this.services.createUserUsecase.execute(userObj);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(newUser));
-        }));
     }
     deleteUserController(req, res) {
         var _a;
-        const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", ""));
-        const deletedUser = this.services.deleteUserUsecase.execute(id);
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(deletedUser));
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", ""));
+            const deletedUser = yield this.services.deleteUserUsecase.execute(id);
+            res.writeHead(200, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify(deletedUser));
+        });
     }
     getUserByIdController(req, res) {
         var _a;
-        const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", ""));
-        const foundUser = this.services.getUserByIdUseCase.execute(id);
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(foundUser));
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", ""));
+            const foundUser = yield this.services.getUserByIdUseCase.execute(id);
+            res.writeHead(200, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify(foundUser));
+        });
     }
     getUserByNameController(req, res) {
         var _a;
-        if (req.url) {
-            const name = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-name/", "");
-            const foundUser = this.services.getUserByNameUseCase.execute(name);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(foundUser));
-        }
-        res.writeHead(400, { "Content-Type": "application/json" });
-        return res.end({ message: "Invalid url." });
+        return __awaiter(this, void 0, void 0, function* () {
+            if (req.url) {
+                const name = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-name/", "");
+                const foundUser = yield this.services.getUserByNameUseCase.execute(name);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(foundUser));
+            }
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end({ message: "Invalid url." });
+        });
     }
     updateUserController(req, res) {
-        let body = "";
-        req.on("data", (chunk) => {
-            body += chunk.toString();
+        return __awaiter(this, void 0, void 0, function* () {
+            let body = "";
+            req.on("data", (chunk) => {
+                body += chunk.toString();
+            });
+            return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
+                const { id, name, username, email, password } = yield JSON.parse(body);
+                const userObj = {
+                    id,
+                    name,
+                    username,
+                    email,
+                    password,
+                };
+                const updatedUser = yield this.services.updateUserUseCase.execute(id, userObj);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(updatedUser));
+            }));
         });
-        return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
-            const { id, name, username, email, password } = yield JSON.parse(body);
-            const userObj = {
-                id,
-                name,
-                username,
-                email,
-                password,
-            };
-            const updatedUser = this.services.updateUserUseCase.execute(id, userObj);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(updatedUser));
-        }));
     }
 }
 exports.UserController = UserController;

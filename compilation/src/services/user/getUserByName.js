@@ -6,7 +6,10 @@ class GetUserByNameUseCase {
         this.repository = repository;
     }
     execute(userName) {
-        return this.repository.getUserByName(userName);
+        return new Promise((resolve) => {
+            const foundUser = this.repository.getUserByName(userName);
+            resolve(foundUser);
+        });
     }
 }
 exports.GetUserByNameUseCase = GetUserByNameUseCase;

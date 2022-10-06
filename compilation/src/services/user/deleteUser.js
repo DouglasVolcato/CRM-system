@@ -6,7 +6,10 @@ class DeleteUserUsecase {
         this.repository = repository;
     }
     execute(userId) {
-        return this.repository.deleteUser(userId);
+        return new Promise((resolve) => {
+            const deletedUser = this.repository.deleteUser(userId);
+            resolve(deletedUser);
+        });
     }
 }
 exports.DeleteUserUsecase = DeleteUserUsecase;
