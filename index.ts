@@ -1,8 +1,9 @@
 import { makeCustomerFactory } from "./src/factories/customer.factory";
 import { makeUserFactory } from "./src/factories/user.factory";
-
+import { envVariables } from "./src/config/envVariables";
 import * as http from "http";
 
+const { port } = envVariables();
 const server = http.createServer((req, res) => {
   const router = req.url;
 
@@ -16,6 +17,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-const port = process.env.PORT || 5000;
-
-server.listen(port, () => console.log("http://localhost:" + port));
+server
+  .listen(3000, () => console.log("http://localhost:" + port))
+  .on("error", (err) => console.log(err));
