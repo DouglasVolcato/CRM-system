@@ -8,6 +8,9 @@ export class GetCustomerByNameUseCase {
   }
 
   execute(customerName: string) {
-    return this.repository.getCustomerByName(customerName);
+    return new Promise((resolve) => {
+      const foundCustomer = this.repository.getCustomerByName(customerName);
+      resolve(foundCustomer);
+    });
   }
 }
