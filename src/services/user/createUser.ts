@@ -9,6 +9,9 @@ export class CreateUserUsecase {
   }
 
   execute(userBody: UserInterface) {
-    return this.repository.createUser(userBody);
+    return new Promise((resolve) => {
+      const newUser = this.repository.createUser(userBody);
+      resolve(newUser);
+    });
   }
 }
