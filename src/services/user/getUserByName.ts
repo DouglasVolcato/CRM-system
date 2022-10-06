@@ -8,6 +8,9 @@ export class GetUserByNameUseCase {
   }
 
   execute(userName: string) {
-    return this.repository.getUserByName(userName);
+    return new Promise((resolve) => {
+      const foundUser = this.repository.getUserByName(userName);
+      resolve(foundUser);
+    });
   }
 }
