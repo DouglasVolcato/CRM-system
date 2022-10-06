@@ -8,6 +8,9 @@ export class DeleteCustomerUseCase {
   }
 
   execute(customerId: number) {
-    return this.repository.deleteCustomer(customerId);
+    return new Promise((resolve) => {
+      const deletedCustomer = this.repository.deleteCustomer(customerId);
+      resolve(deletedCustomer);
+    });
   }
 }
