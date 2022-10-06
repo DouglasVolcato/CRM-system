@@ -9,6 +9,12 @@ export class UpdateCustomerUseCase {
   }
 
   execute(customerId: number, customerBody: CustomerInterface) {
-    return this.repository.updateCustomer(customerId, customerBody);
+    return new Promise((resolve) => {
+      const updatedCustoer = this.repository.updateCustomer(
+        customerId,
+        customerBody
+      );
+      resolve(updatedCustoer);
+    });
   }
 }
