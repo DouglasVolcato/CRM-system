@@ -8,6 +8,9 @@ export class DeleteUserUsecase {
   }
 
   execute(userId: number) {
-    return this.repository.deleteUser(userId);
+    return new Promise((resolve) => {
+      const deletedUser = this.repository.deleteUser(userId);
+      resolve(deletedUser);
+    });
   }
 }
