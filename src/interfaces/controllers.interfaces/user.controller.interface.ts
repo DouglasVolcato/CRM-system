@@ -1,5 +1,5 @@
-import { UserInterface } from "../entities.interfaces/user.interface";
 import * as http from "http";
+
 export interface UserControllerInterface {
   createUserController(
     req: http.IncomingMessage,
