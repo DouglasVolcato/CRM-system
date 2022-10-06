@@ -8,7 +8,7 @@ export class CustomerController {
     this.services = services;
   }
 
-  createCustomerController(
+  async createCustomerController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
@@ -30,42 +30,47 @@ export class CustomerController {
         notes,
       };
 
-      const newCustomer =
-        this.services.createCustomerUseCase.execute(customerObj);
+      const newCustomer = await this.services.createCustomerUseCase.execute(
+        customerObj
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(newCustomer));
     });
   }
 
-  deleteCustomerController(
+  async deleteCustomerController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
     const id = Number(req.url?.replace("/users/delete-user/", ""));
-    const deletedCustomer = this.services.deleteCustomerUseCase.execute(id);
+    const deletedCustomer = await this.services.deleteCustomerUseCase.execute(
+      id
+    );
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(deletedCustomer));
   }
 
-  getCustomerByIdController(
+  async getCustomerByIdController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
     const id = Number(req.url?.replace("/users/find-user-by-id/", ""));
-    const foundCustomer = this.services.getCustomerByIdUseCase.execute(id);
+    const foundCustomer = await this.services.getCustomerByIdUseCase.execute(
+      id
+    );
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(foundCustomer));
   }
 
-  getCustomerByNameController(
+  async getCustomerByNameController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
     if (req.url) {
       const name = req.url.replace("/users/find-user-by-name/", "");
       const foundCustomer =
-        this.services.getCustomerByNameUseCase.execute(name);
+        await this.services.getCustomerByNameUseCase.execute(name);
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(foundCustomer));
     }
@@ -73,7 +78,7 @@ export class CustomerController {
     return res.end({ message: "Invalid url." });
   }
 
-  updateCustomerController(
+  async updateCustomerController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
@@ -95,7 +100,7 @@ export class CustomerController {
         notes,
       };
 
-      const updatedCustomer = this.services.updateCustomerUseCase.execute(
+      const updatedCustomer = await this.services.updateCustomerUseCase.execute(
         id,
         customerObj
       );
