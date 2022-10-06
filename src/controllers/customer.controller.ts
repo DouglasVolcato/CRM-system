@@ -1,5 +1,4 @@
 import { CustomerServicesInterface } from "../interfaces/services.interfaces/customer.services.interface";
-import { CustomerInterface } from "../interfaces/entities.interfaces/customer.interface";
 import * as http from "http";
 
 export class CustomerController {

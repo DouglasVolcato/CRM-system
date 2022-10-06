@@ -1,4 +1,3 @@
-import { CustomerInterface } from "../entities.interfaces/customer.interface";
 import * as http from "http";
 
 export interface CustomerControllerInterface {
