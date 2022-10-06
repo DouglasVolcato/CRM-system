@@ -8,6 +8,9 @@ export class GetUserByIdUseCase {
   }
 
   execute(userId: number) {
-    return this.repository.getUserById(userId);
+    return new Promise((resolve) => {
+      const foundUser = this.repository.getUserById(userId);
+      resolve(foundUser);
+    });
   }
 }
