@@ -9,6 +9,9 @@ export class UpdateUserUseCase {
   }
 
   execute(userId: number, userBody: UserInterface) {
-    return this.repository.updateUser(userId, userBody);
+    return new Promise((resolve) => {
+      const updatedUser = this.repository.updateUser(userId, userBody);
+      resolve(updatedUser);
+    });
   }
 }
