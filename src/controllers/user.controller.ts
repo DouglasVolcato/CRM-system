@@ -1,3 +1,4 @@
+import * as http from "http";
 import { UserServicesInterface } from "../interfaces/services.interfaces/user.services.interface";
 
 export class UserController {
@@ -7,7 +8,7 @@ export class UserController {
     this.services = services;
   }
 
-  createUserController(req: any, res: any) {
+  createUserController(req: http.IncomingMessage, res: http.ServerResponse) {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -32,28 +33,32 @@ export class UserController {
     });
   }
 
-  deleteUserController(req: any, res: any) {
-    const id = Number(req.url.replace("/users/delete-user/", ""));
+  deleteUserController(req: http.IncomingMessage, res: http.ServerResponse) {
+    const id = Number(req.url?.replace("/users/delete-user/", ""));
     const deletedUser = this.services.deleteUserUsecase.execute(id);
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(deletedUser));
   }
 
-  getUserByIdController(req: any, res: any) {
-    const id = Number(req.url.replace("/users/find-user-by-id/", ""));
+  getUserByIdController(req: http.IncomingMessage, res: http.ServerResponse) {
+    const id = Number(req.url?.replace("/users/find-user-by-id/", ""));
     const foundUser = this.services.getUserByIdUseCase.execute(id);
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(foundUser));
   }
 
-  getUserByNameController(req: any, res: any) {
-    const name = req.url.replace("/users/find-user-by-name/", "");
-    const foundUser = this.services.getUserByNameUseCase.execute(name);
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(foundUser));
+  getUserByNameController(req: http.IncomingMessage, res: http.ServerResponse) {
+    if (req.url) {
+      const name = req.url?.replace("/users/find-user-by-name/", "");
+      const foundUser = this.services.getUserByNameUseCase.execute(name);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(foundUser));
+    }
+    res.writeHead(400, { "Content-Type": "application/json" });
+    return res.end({ message: "Invalid url." });
   }
 
-  updateUserController(req: any, res: any) {
+  updateUserController(req: http.IncomingMessage, res: http.ServerResponse) {
     let body = "";
 
     req.on("data", (chunk: any) => {

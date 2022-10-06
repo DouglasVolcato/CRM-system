@@ -34,22 +34,29 @@ class UserController {
         }));
     }
     deleteUserController(req, res) {
-        const id = Number(req.url.replace("/users/delete-user/", ""));
+        var _a;
+        const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", ""));
         const deletedUser = this.services.deleteUserUsecase.execute(id);
         res.writeHead(200, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(deletedUser));
     }
     getUserByIdController(req, res) {
-        const id = Number(req.url.replace("/users/find-user-by-id/", ""));
+        var _a;
+        const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", ""));
         const foundUser = this.services.getUserByIdUseCase.execute(id);
         res.writeHead(200, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(foundUser));
     }
     getUserByNameController(req, res) {
-        const name = req.url.replace("/users/find-user-by-name/", "");
-        const foundUser = this.services.getUserByNameUseCase.execute(name);
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(foundUser));
+        var _a;
+        if (req.url) {
+            const name = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-name/", "");
+            const foundUser = this.services.getUserByNameUseCase.execute(name);
+            res.writeHead(200, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify(foundUser));
+        }
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end({ message: "Invalid url." });
     }
     updateUserController(req, res) {
         let body = "";
