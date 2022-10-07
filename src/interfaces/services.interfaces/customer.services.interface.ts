@@ -4,15 +4,19 @@ export interface CustomerServicesInterface {
   createCustomerUseCase: {
     execute(
       customerBody: CustomerInterface
-    ): Promise<unknown> | { message: string };
+    ): Promise<unknown> | CustomerInterface;
   };
 
   deleteCustomerUseCase: {
-    execute(customerId: number): Promise<unknown> | { message: string };
+    execute(customerId: number): Promise<unknown> | CustomerInterface;
+  };
+
+  getAllCustomerUseCase: {
+    execute(): Promise<unknown> | CustomerInterface[];
   };
 
   getCustomerByIdUseCase: {
-    execute(customerId: number): Promise<unknown> | CustomerInterface[];
+    execute(customerId: number): Promise<unknown> | CustomerInterface;
   };
 
   getCustomerByNameUseCase: {
@@ -23,6 +27,6 @@ export interface CustomerServicesInterface {
     execute(
       customerId: number,
       customerBody: CustomerInterface
-    ): Promise<unknown> | { message: string };
+    ): Promise<unknown> | CustomerInterface;
   };
 }
