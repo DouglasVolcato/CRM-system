@@ -11,6 +11,11 @@ export interface CustomerControllerInterface {
     res: http.ServerResponse
   ): Promise<unknown> | http.ServerResponse;
 
+  getAllCustomersController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): Promise<unknown> | http.ServerResponse;
+
   getCustomerByIdController(
     req: http.IncomingMessage,
     res: http.ServerResponse
