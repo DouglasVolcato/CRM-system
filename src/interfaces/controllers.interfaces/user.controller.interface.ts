@@ -11,6 +11,11 @@ export interface UserControllerInterface {
     res: http.ServerResponse
   ): Promise<unknown> | http.ServerResponse;
 
+  getAllUsersController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): Promise<unknown> | http.ServerResponse;
+
   getUserByIdController(
     req: http.IncomingMessage,
     res: http.ServerResponse
