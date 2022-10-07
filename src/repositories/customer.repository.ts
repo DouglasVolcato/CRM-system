@@ -3,33 +3,59 @@ import { customers } from "../mocks/customers";
 
 export class CustomerRepository {
   createCustomer(customerBody: CustomerInterface) {
-    customers.push(customerBody);
-    return { message: "Customer created." };
+    return new Promise((resolve) => {
+      customers.push(customerBody);
+      resolve(customerBody);
+    });
+  }
+
+  getAllCustomers() {
+    return new Promise((resolve) => {
+      resolve(customers);
+    });
   }
 
   getCustomerByName(customerName: string) {
-    return customers.filter((customer) => customer.name === customerName);
+    return new Promise((resolve) => {
+      const foundCustomer = customers.filter((customer: CustomerInterface) =>
+        customer.name.includes(customerName)
+      );
+      resolve(foundCustomer);
+    });
   }
 
   getCustomerById(customerId: number) {
-    return customers.filter((customer) => customer.id === customerId);
+    return new Promise((resolve) => {
+      const foundCustomer = customers.filter(
+        (customer: CustomerInterface) => customer.id === customerId
+      );
+      resolve(foundCustomer[0]);
+    });
   }
 
   deleteCustomer(customerId: number) {
-    customers.map((customer, index) => {
-      if (customer.id === customerId) {
-        customers.splice(index, 1);
-      }
+    return new Promise((resolve) => {
+      const foundCustomer: CustomerInterface[] = [];
+      customers.map((customer: CustomerInterface, index: number) => {
+        if (customer.id === customerId) {
+          foundCustomer.push(customer);
+          customers.splice(index, 1);
+        }
+      });
+      resolve(foundCustomer[0]);
     });
-    return { message: "Customer deleted." };
   }
 
   updateCustomer(customerId: number, customerBody: CustomerInterface) {
-    customers.map((customer, index) => {
-      if (customer.id === customerId) {
-        customers.splice(index, 1, customerBody);
-      }
+    return new Promise((resolve) => {
+      const foundCustomer: CustomerInterface[] = [];
+      customers.map((customer: CustomerInterface, index, number) => {
+        if (customer.id === customerId) {
+          foundCustomer.push(customer);
+          customers.splice(index, 1, customerBody);
+        }
+      });
+      resolve(foundCustomer[0]);
     });
-    return { message: "Customer updated." };
   }
 }
