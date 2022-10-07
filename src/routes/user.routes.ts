@@ -33,6 +33,11 @@ export class UserRoutes {
     ) {
       this.controller.getUserByIdController(this.req, this.res);
     } else if (
+      this.router === "/users/find-all-user" &&
+      this.req.method === "GET"
+    ) {
+      this.controller.getAllUsersController(this.req, this.res);
+    } else if (
       this.router.includes("/users/find-user-by-name/") &&
       this.req.method === "GET"
     ) {
