@@ -1,4 +1,4 @@
-export function statusCodeGenerator(err: any) {
+export function statusCodeGenerator(err: any): number {
   const referenceErr = err.toString().toLowerCase();
   if (referenceErr.includes("missing")) {
     return 400;
