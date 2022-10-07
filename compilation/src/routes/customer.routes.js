@@ -21,11 +21,11 @@ class CustomerRoutes {
             this.req.method === "GET") {
             this.controller.getCustomerByIdController(this.req, this.res);
         }
-        else if (this.router === "/customers/find-all-customer" &&
+        else if (this.router === "/customers/find-all-customers" &&
             this.req.method === "GET") {
             this.controller.getAllCustomersController(this.req, this.res);
         }
-        else if (this.router.includes("/customers/find-customer-by-name/") &&
+        else if (this.router.includes("/customers/find-customers-by-name/") &&
             this.req.method === "GET") {
             this.controller.getCustomerByNameController(this.req, this.res);
         }

@@ -20,11 +20,11 @@ class UserRoutes {
             this.req.method === "GET") {
             this.controller.getUserByIdController(this.req, this.res);
         }
-        else if (this.router === "/users/find-all-user" &&
+        else if (this.router === "/users/find-all-users" &&
             this.req.method === "GET") {
             this.controller.getAllUsersController(this.req, this.res);
         }
-        else if (this.router.includes("/users/find-user-by-name/") &&
+        else if (this.router.includes("/users/find-users-by-name/") &&
             this.req.method === "GET") {
             this.controller.getUserByNameController(this.req, this.res);
         }
