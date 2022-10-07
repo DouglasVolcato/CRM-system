@@ -1,16 +1,22 @@
 import { CustomerInterface } from "../entities.interfaces/customer.interface";
 
 export interface CustomerRepositoryInterface {
-  createCustomer(customerBody: CustomerInterface): { message: string };
+  createCustomer(
+    customerBody: CustomerInterface
+  ): Promise<unknown> | CustomerInterface;
 
-  getCustomerByName(customerName: string): CustomerInterface[];
+  getAllCustomers(): Promise<unknown> | CustomerInterface[];
 
-  getCustomerById(customerId: number): CustomerInterface[];
+  getCustomerByName(
+    customerName: string
+  ): Promise<unknown> | CustomerInterface[];
 
-  deleteCustomer(customerId: number): { message: string };
+  getCustomerById(customerId: number): Promise<unknown> | CustomerInterface;
+
+  deleteCustomer(customerId: number): Promise<unknown> | CustomerInterface;
 
   updateCustomer(
     customerId: number,
     customerBody: CustomerInterface
-  ): { message: string };
+  ): Promise<unknown> | CustomerInterface;
 }
