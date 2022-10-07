@@ -8,7 +8,10 @@ export class UserController {
     this.services = services;
   }
 
-  async createUserController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async createUserController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -33,27 +36,48 @@ export class UserController {
     });
   }
 
-  async deleteUserController(req: http.IncomingMessage, res: http.ServerResponse) {
-    const id = Number(req.url?.replace("/users/delete-user/", ""));
-    const deletedUser = await this.services.deleteUserUsecase.execute(id);
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(deletedUser));
+  async deleteUserController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
+    const id = req.url?.replace("/users/delete-user/", "").split("/")[3];
+    if (id) {
+      const deletedUser = await this.services.deleteUserUsecase.execute(id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(deletedUser));
+    } else {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end({ message: "Invalid url." });
+    }
   }
 
-  async getAllUsersController(req: http.IncomingMessage, res: http.ServerResponse) {
-    const foundUsers = await this.services.getAllUserUseCase.execute()
+  async getAllUsersController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
+    const foundUsers = await this.services.getAllUserUseCase.execute();
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(foundUsers));
   }
 
-  async getUserByIdController(req: http.IncomingMessage, res: http.ServerResponse) {
-    const id = Number(req.url?.replace("/users/find-user-by-id/", ""));
-    const foundUser = await this.services.getUserByIdUseCase.execute(id);
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(foundUser));
+  async getUserByIdController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
+    const id = req.url?.replace("/users/find-user-by-id/", "").split("/")[3];
+    if (id) {
+      const foundUser = await this.services.getUserByIdUseCase.execute(id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(foundUser));
+    }
+    res.writeHead(400, { "Content-Type": "application/json" });
+    return res.end({ message: "Invalid url." });
   }
 
-  async getUserByNameController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async getUserByNameController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
     if (req.url) {
       const name = req.url?.replace("/users/find-user-by-name/", "");
       const foundUser = await this.services.getUserByNameUseCase.execute(name);
@@ -64,7 +88,10 @@ export class UserController {
     return res.end({ message: "Invalid url." });
   }
 
-  async updateUserController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async updateUserController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -82,7 +109,10 @@ export class UserController {
         password,
       };
 
-      const updatedUser = await this.services.updateUserUseCase.execute(id, userObj);
+      const updatedUser = await this.services.updateUserUseCase.execute(
+        id,
+        userObj
+      );
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(updatedUser));
     });

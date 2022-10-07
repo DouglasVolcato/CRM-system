@@ -43,12 +43,16 @@ export class CustomerController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const id = Number(req.url?.replace("/customers/delete-customers/", ""));
-    const deletedCustomer = await this.services.deleteCustomerUseCase.execute(
-      id
-    );
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(deletedCustomer));
+    const id = req.url?.replace("/customers/delete-customers/", "").split("/")[3];
+    if (id) {
+      const deletedCustomer = await this.services.deleteCustomerUseCase.execute(
+        id
+      );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(deletedCustomer));
+    }
+    res.writeHead(400, { "Content-Type": "application/json" });
+    return res.end({ message: "Invalid url." });
   }
 
   async getAllCustomersController(
@@ -64,12 +68,18 @@ export class CustomerController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const id = Number(req.url?.replace("/customers/find-customers-by-id/", ""));
-    const foundCustomer = await this.services.getCustomerByIdUseCase.execute(
-      id
-    );
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(foundCustomer));
+    const id = req.url
+      ?.replace("/customers/find-customers-by-id/", "")
+      .split("/")[3];
+    if (id) {
+      const foundCustomer = await this.services.getCustomerByIdUseCase.execute(
+        id
+      );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(foundCustomer));
+    }
+    res.writeHead(400, { "Content-Type": "application/json" });
+    return res.end({ message: "Invalid url." });
   }
 
   async getCustomerByNameController(
