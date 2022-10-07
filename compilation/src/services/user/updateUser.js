@@ -19,6 +19,9 @@ class UpdateUserUseCase {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             const foundUser = yield this.repository.getUserById(userId);
+            if (foundUser === undefined) {
+                throw new Error("User not found.");
+            }
             const body = {
                 id: foundUser.id,
                 name: (_a = userBody.name) !== null && _a !== void 0 ? _a : foundUser.name,

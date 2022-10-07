@@ -9,7 +9,7 @@ class User {
         this.name = userBody.name;
         this.username = userBody.username;
         this.email = userBody.email;
-        this.password = cryptography_1.cryptography.encryptPassword(userBody.password);
+        this.password = userBody.password;
     }
     validate() {
         if (!this.name ||
@@ -26,7 +26,7 @@ class User {
             name: this.name,
             username: this.username,
             email: this.email,
-            password: this.password,
+            password: cryptography_1.cryptography.encryptPassword(this.password),
         };
     }
 }

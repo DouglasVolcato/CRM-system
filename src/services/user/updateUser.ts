@@ -11,6 +11,9 @@ export class UpdateUserUseCase {
 
   async execute(userId: string, userBody: UserInterface) {
     const foundUser: any = await this.repository.getUserById(userId);
+    if (foundUser === undefined) {
+      throw new Error("User not found.");
+    }
 
     const body = {
       id: foundUser.id,

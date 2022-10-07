@@ -16,8 +16,13 @@ class GetUserByNameUseCase {
     }
     execute(userName) {
         return __awaiter(this, void 0, void 0, function* () {
-            const foundUser = yield this.repository.getUserByName(userName);
-            return foundUser;
+            const foundUsers = yield this.repository.getUserByName(userName);
+            if (foundUsers === null ||
+                foundUsers === undefined ||
+                foundUsers.length === 0) {
+                throw new Error("Users not found.");
+            }
+            return foundUsers;
         });
     }
 }

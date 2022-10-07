@@ -17,6 +17,9 @@ class DeleteUserUsecase {
     execute(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const deletedUser = yield this.repository.deleteUser(userId);
+            if (deletedUser === undefined) {
+                throw new Error("User not found to delete.");
+            }
             return deletedUser;
         });
     }

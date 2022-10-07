@@ -17,6 +17,11 @@ class GetAllCustomerUseCase {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
             const foundCustomers = yield this.repository.getAllCustomers();
+            if (foundCustomers === null ||
+                foundCustomers === undefined ||
+                foundCustomers.length === 0) {
+                throw new Error("There are no customers in database.");
+            }
             return foundCustomers;
         });
     }

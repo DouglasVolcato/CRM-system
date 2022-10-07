@@ -18,6 +18,9 @@ class UpdateCustomerUseCase {
         var _a, _b, _c, _d, _e;
         return __awaiter(this, void 0, void 0, function* () {
             const foundCustomer = yield this.repository.getCustomerById(customerId);
+            if (foundCustomer === undefined) {
+                throw new Error("Customer not found.");
+            }
             const body = {
                 id: foundCustomer.id,
                 name: (_a = customerBody.name) !== null && _a !== void 0 ? _a : foundCustomer.name,

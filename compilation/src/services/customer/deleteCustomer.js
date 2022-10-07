@@ -17,6 +17,9 @@ class DeleteCustomerUseCase {
     execute(customerId) {
         return __awaiter(this, void 0, void 0, function* () {
             const deletedCustomer = yield this.repository.deleteCustomer(customerId);
+            if (deletedCustomer === undefined) {
+                throw new Error("Customer not found to delete.");
+            }
             return deletedCustomer;
         });
     }

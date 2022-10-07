@@ -17,6 +17,9 @@ class GetUserByIdUseCase {
     execute(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const foundUser = yield this.repository.getUserById(userId);
+            if (foundUser === undefined) {
+                throw new Error("User not found.");
+            }
             return foundUser;
         });
     }

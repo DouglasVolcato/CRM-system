@@ -16,8 +16,13 @@ class GetCustomerByNameUseCase {
     }
     execute(customerName) {
         return __awaiter(this, void 0, void 0, function* () {
-            const foundCustomer = yield this.repository.getCustomerByName(customerName);
-            return foundCustomer;
+            const foundCustomers = yield this.repository.getCustomerByName(customerName);
+            if (foundCustomers === null ||
+                foundCustomers === undefined ||
+                foundCustomers.length === 0) {
+                throw new Error("Customers not found.");
+            }
+            return foundCustomers;
         });
     }
 }

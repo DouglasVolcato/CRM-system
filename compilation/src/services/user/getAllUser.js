@@ -17,6 +17,11 @@ class GetAllUserUseCase {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
             const foundUsers = yield this.repository.getAllUsers();
+            if (foundUsers === null ||
+                foundUsers === undefined ||
+                foundUsers.length === 0) {
+                throw new Error("There are no users in database.");
+            }
             return foundUsers;
         });
     }
