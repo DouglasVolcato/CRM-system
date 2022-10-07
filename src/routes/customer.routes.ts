@@ -36,6 +36,11 @@ export class CustomerRoutes {
     ) {
       this.controller.getCustomerByIdController(this.req, this.res);
     } else if (
+      this.router === "/customers/find-all-customer" &&
+      this.req.method === "GET"
+    ) {
+      this.controller.getAllCustomersController(this.req, this.res);
+    } else if (
       this.router.includes("/customers/find-customer-by-name/") &&
       this.req.method === "GET"
     ) {
