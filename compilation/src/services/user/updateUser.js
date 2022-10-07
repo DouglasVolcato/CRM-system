@@ -10,14 +10,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateUserUseCase = void 0;
+const cryptography_1 = require("../../helpers/cryptography");
 class UpdateUserUseCase {
     constructor(repository) {
         this.repository = repository;
     }
     execute(userId, userBody) {
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             const foundUser = yield this.repository.getUserById(userId);
-            const body = Object.assign(foundUser, userBody);
+            const body = {
+                id: foundUser.id,
+                name: (_a = userBody.name) !== null && _a !== void 0 ? _a : foundUser.name,
+                username: (_b = userBody.username) !== null && _b !== void 0 ? _b : foundUser.username,
+                email: (_c = userBody.email) !== null && _c !== void 0 ? _c : foundUser.email,
+                password: userBody.password
+                    ? cryptography_1.cryptography.encryptPassword(userBody.password)
+                    : foundUser.password,
+            };
             const updatedUser = yield this.repository.updateUser(userId, body);
             return updatedUser;
         });
