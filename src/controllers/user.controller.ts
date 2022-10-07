@@ -40,6 +40,12 @@ export class UserController {
     return res.end(JSON.stringify(deletedUser));
   }
 
+  async getAllUsersController(req: http.IncomingMessage, res: http.ServerResponse) {
+    const foundUsers = await this.services.getAllUserUseCase.execute()
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(foundUsers));
+  }
+
   async getUserByIdController(req: http.IncomingMessage, res: http.ServerResponse) {
     const id = Number(req.url?.replace("/users/find-user-by-id/", ""));
     const foundUser = await this.services.getUserByIdUseCase.execute(id);
