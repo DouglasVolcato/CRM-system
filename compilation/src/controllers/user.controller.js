@@ -38,10 +38,16 @@ class UserController {
     deleteUserController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", ""));
-            const deletedUser = yield this.services.deleteUserUsecase.execute(id);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(deletedUser));
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", "").split("/")[3];
+            if (id) {
+                const deletedUser = yield this.services.deleteUserUsecase.execute(id);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(deletedUser));
+            }
+            else {
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end({ message: "Invalid url." });
+            }
         });
     }
     getAllUsersController(req, res) {
@@ -54,10 +60,14 @@ class UserController {
     getUserByIdController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", ""));
-            const foundUser = yield this.services.getUserByIdUseCase.execute(id);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(foundUser));
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", "").split("/")[3];
+            if (id) {
+                const foundUser = yield this.services.getUserByIdUseCase.execute(id);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(foundUser));
+            }
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end({ message: "Invalid url." });
         });
     }
     getUserByNameController(req, res) {

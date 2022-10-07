@@ -1,29 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Customer = void 0;
+const idGenerator_1 = require("../helpers/idGenerator");
 class Customer {
     constructor(userBody) {
-        this.id = userBody.id;
+        var _a, _b, _c, _d;
+        this.id = (0, idGenerator_1.generateId)();
         this.name = userBody.name;
-        this.age = userBody.age;
-        this.phone = userBody.phone;
-        this.city = userBody.city;
-        this.notes = userBody.notes;
+        this.age = (_a = userBody.age) !== null && _a !== void 0 ? _a : undefined;
+        this.phone = (_b = userBody.phone) !== null && _b !== void 0 ? _b : undefined;
+        this.city = (_c = userBody.city) !== null && _c !== void 0 ? _c : "";
+        this.notes = (_d = userBody.notes) !== null && _d !== void 0 ? _d : "";
     }
     validate() {
-        if (!this.name || !this.id) {
-            throw new Error("Missing fields for customer creation.");
+        if (!this.name) {
+            throw new Error("Missing name in customer creation.");
         }
     }
     getCustomer() {
-        var _a, _b, _c, _d;
         return {
             id: this.id,
             name: this.name,
-            age: (_a = this.age) !== null && _a !== void 0 ? _a : null,
-            phone: (_b = this.phone) !== null && _b !== void 0 ? _b : null,
-            city: (_c = this.city) !== null && _c !== void 0 ? _c : null,
-            notes: (_d = this.notes) !== null && _d !== void 0 ? _d : null,
+            age: this.age,
+            phone: this.phone,
+            city: this.city,
+            notes: this.notes,
         };
     }
 }

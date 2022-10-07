@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const idGenerator_1 = require("../helpers/idGenerator");
+const cryptography_1 = require("../helpers/cryptography");
 class User {
     constructor(userBody) {
-        this.id = userBody.id;
+        this.id = (0, idGenerator_1.generateId)();
         this.name = userBody.name;
         this.username = userBody.username;
         this.email = userBody.email;
-        this.password = userBody.password;
+        this.password = cryptography_1.cryptography.encryptPassword(userBody.password);
     }
     validate() {
         if (!this.name ||

@@ -41,7 +41,7 @@ class CustomerRepository {
     updateCustomer(customerId, customerBody) {
         return new Promise((resolve) => {
             const foundCustomer = [];
-            customers_1.customers.map((customer, index, number) => {
+            customers_1.customers.map((customer, index) => {
                 if (customer.id === customerId) {
                     foundCustomer.push(customer);
                     customers_1.customers.splice(index, 1, customerBody);

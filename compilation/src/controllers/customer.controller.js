@@ -39,10 +39,14 @@ class CustomerController {
     deleteCustomerController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/delete-customers/", ""));
-            const deletedCustomer = yield this.services.deleteCustomerUseCase.execute(id);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(deletedCustomer));
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/delete-customers/", "").split("/")[3];
+            if (id) {
+                const deletedCustomer = yield this.services.deleteCustomerUseCase.execute(id);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(deletedCustomer));
+            }
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end({ message: "Invalid url." });
         });
     }
     getAllCustomersController(req, res) {
@@ -55,10 +59,14 @@ class CustomerController {
     getCustomerByIdController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/find-customers-by-id/", ""));
-            const foundCustomer = yield this.services.getCustomerByIdUseCase.execute(id);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify(foundCustomer));
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/find-customers-by-id/", "").split("/")[3];
+            if (id) {
+                const foundCustomer = yield this.services.getCustomerByIdUseCase.execute(id);
+                res.writeHead(200, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify(foundCustomer));
+            }
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end({ message: "Invalid url." });
         });
     }
     getCustomerByNameController(req, res) {

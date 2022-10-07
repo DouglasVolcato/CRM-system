@@ -22,7 +22,7 @@ class UserRepository {
     }
     getUserById(userId) {
         return new Promise((resolve) => {
-            const foundUser = user_1.users.filter((user) => user.id === userId);
+            const foundUser = user_1.users.filter((user) => user === userId);
             resolve(foundUser[0]);
         });
     }
