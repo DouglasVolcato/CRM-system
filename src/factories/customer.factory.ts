@@ -17,6 +17,9 @@ export function makeCustomerFactory(
   const deleteCustomerUseCase = new services.DeleteCustomerUseCase(
     customerRepository
   );
+  const getAllCustomerUseCase = new services.GetAllCustomerUseCase(
+    customerRepository
+  );
   const getCustomerByIdUseCase = new services.GetCustomerByIdUseCase(
     customerRepository
   );
@@ -30,6 +33,7 @@ export function makeCustomerFactory(
   const customerController = new CustomerController({
     createCustomerUseCase,
     deleteCustomerUseCase,
+    getAllCustomerUseCase,
     getCustomerByIdUseCase,
     getCustomerByNameUseCase,
     updateCustomerUseCase,
@@ -42,5 +46,5 @@ export function makeCustomerFactory(
     res
   );
 
-  return customerRoutes;
+  return customerRoutes.route();
 }
