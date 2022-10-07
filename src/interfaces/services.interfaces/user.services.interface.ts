@@ -2,15 +2,19 @@ import { UserInterface } from "../entities.interfaces/user.interface";
 
 export interface UserServicesInterface {
   createUserUsecase: {
-    execute(userBody: UserInterface): Promise<unknown> | { message: string };
+    execute(userBody: UserInterface): Promise<unknown> | UserInterface;
   };
 
   deleteUserUsecase: {
-    execute(userId: number): Promise<unknown> | { message: string };
+    execute(userId: number): Promise<unknown> | UserInterface;
+  };
+
+  getAllUserUseCase: {
+    execute(): Promise<unknown> | UserInterface[];
   };
 
   getUserByIdUseCase: {
-    execute(userId: number): Promise<unknown> | UserInterface[];
+    execute(userId: number): Promise<unknown> | UserInterface;
   };
 
   getUserByNameUseCase: {
@@ -21,6 +25,6 @@ export interface UserServicesInterface {
     execute(
       userId: number,
       userBody: UserInterface
-    ): Promise<unknown> | { message: string };
+    ): Promise<unknown> | UserInterface;
   };
 }
