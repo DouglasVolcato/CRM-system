@@ -1,5 +1,6 @@
 import { CustomerServicesInterface } from "../interfaces/services.interfaces/customer.services.interface";
 import * as http from "http";
+import { statusCodeGenerator } from "../helpers/statusCodeGenerator";
 
 export class CustomerController {
   services: CustomerServicesInterface;
@@ -35,10 +36,12 @@ export class CustomerController {
           customerObj
         );
 
-        res.writeHead(200, { "Content-Type": "application/json" });
+        res.writeHead(201, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(newCustomer));
       } catch (err) {
-        res.writeHead(400, { "Content-Type": "application/json" });
+        res.writeHead(statusCodeGenerator(err), {
+          "Content-Type": "application/json",
+        });
         return res.end(
           JSON.stringify({ Message: "Error creating customer: " + err })
         );
@@ -61,7 +64,9 @@ export class CustomerController {
       res.writeHead(400, { "Content-Type": "application/json" });
       return res.end(JSON.stringify({ message: "Invalid url." }));
     } catch (err) {
-      res.writeHead(400, { "Content-Type": "application/json" });
+      res.writeHead(statusCodeGenerator(err), {
+        "Content-Type": "application/json",
+      });
       return res.end(
         JSON.stringify({ Message: "Error deleting customer: " + err })
       );
@@ -75,10 +80,10 @@ export class CustomerController {
     try {
       const foundCustomers =
         await this.services.getAllCustomerUseCase.execute();
-      res.writeHead(200, { "Content-Type": "application/json" });
+      res.writeHead(302, { "Content-Type": "application/json" });
       return res.end(JSON.stringify(foundCustomers));
     } catch (err) {
-      res.writeHead(400, { "Content-Type": "application/json" });
+      res.writeHead(statusCodeGenerator(err), { "Content-Type": "application/json" });
       return res.end(
         JSON.stringify({ Message: "Error finding customers: " + err })
       );
@@ -94,13 +99,13 @@ export class CustomerController {
       if (id) {
         const foundCustomer =
           await this.services.getCustomerByIdUseCase.execute(id);
-        res.writeHead(200, { "Content-Type": "application/json" });
+        res.writeHead(302, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(foundCustomer));
       }
       res.writeHead(400, { "Content-Type": "application/json" });
       return res.end(JSON.stringify({ message: "Invalid url." }));
     } catch (err) {
-      res.writeHead(400, { "Content-Type": "application/json" });
+      res.writeHead(statusCodeGenerator(err), { "Content-Type": "application/json" });
       return res.end(
         JSON.stringify({ message: "Error finding customer: " + err })
       );
@@ -116,13 +121,13 @@ export class CustomerController {
         const name = req.url.replace("/customers/find-customers-by-name/", "");
         const foundCustomer =
           await this.services.getCustomerByNameUseCase.execute(name);
-        res.writeHead(200, { "Content-Type": "application/json" });
+        res.writeHead(302, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(foundCustomer));
       }
       res.writeHead(400, { "Content-Type": "application/json" });
       return res.end(JSON.stringify({ message: "Invalid url." }));
     } catch (err) {
-      res.writeHead(400, { "Content-Type": "application/json" });
+      res.writeHead(statusCodeGenerator(err), { "Content-Type": "application/json" });
       return res.end(
         JSON.stringify({ Message: "Error finding customer: " + err })
       );
@@ -163,7 +168,7 @@ export class CustomerController {
           res.writeHead(200, { "Content-Type": "application/json" });
           return res.end(JSON.stringify(updatedCustomer));
         } catch (err) {
-          res.writeHead(400, { "Content-Type": "application/json" });
+          res.writeHead(statusCodeGenerator(err), { "Content-Type": "application/json" });
           return res.end(
             JSON.stringify({ Message: "Error updating customer: " + err })
           );
