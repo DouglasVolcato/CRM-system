@@ -1,18 +1,20 @@
 import { UserInterface } from "../interfaces/entities.interfaces/user.interface";
+import { generateId } from "../helpers/idGenerator";
+import { cryptography } from "../helpers/cryptography";
 
 export class User {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;
   password: string;
 
   constructor(userBody: UserInterface) {
-    this.id = userBody.id;
+    this.id = generateId();
     this.name = userBody.name;
     this.username = userBody.username;
     this.email = userBody.email;
-    this.password = userBody.password;
+    this.password = cryptography.encryptPassword(userBody.password);
   }
 
   validate() {
