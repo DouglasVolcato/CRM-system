@@ -22,7 +22,7 @@ class UserRepository {
     }
     getUserById(userId) {
         return new Promise((resolve) => {
-            const foundUser = user_1.users.filter((user) => user === userId);
+            const foundUser = user_1.users.filter((user) => user.id === userId);
             resolve(foundUser[0]);
         });
     }
@@ -43,7 +43,7 @@ class UserRepository {
             const foundUser = [];
             user_1.users.map((user, index) => {
                 if (user.id === userId) {
-                    foundUser.push(user);
+                    foundUser.push(userBody);
                     user_1.users.splice(index, 1, userBody);
                 }
             });

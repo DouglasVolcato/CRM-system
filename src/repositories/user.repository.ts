@@ -24,10 +24,10 @@ export class UserRepository {
     });
   }
 
-  getUserById(userId: any) {
+  getUserById(userId: string) {
     return new Promise((resolve) => {
       const foundUser = users.filter(
-        (user: UserInterface) => user === userId
+        (user: UserInterface) => user.id === userId
       );
       resolve(foundUser[0]);
     });
@@ -51,7 +51,7 @@ export class UserRepository {
       const foundUser: UserInterface[] = [];
       users.map((user: UserInterface, index: number) => {
         if (user.id === userId) {
-          foundUser.push(user);
+          foundUser.push(userBody);
           users.splice(index, 1, userBody);
         }
       });
