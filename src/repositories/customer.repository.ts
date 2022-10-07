@@ -51,7 +51,7 @@ export class CustomerRepository {
       const foundCustomer: CustomerInterface[] = [];
       customers.map((customer: CustomerInterface, index: number) => {
         if (customer.id === customerId) {
-          foundCustomer.push(customer);
+          foundCustomer.push(customerBody);
           customers.splice(index, 1, customerBody);
         }
       });

@@ -43,7 +43,7 @@ class CustomerRepository {
             const foundCustomer = [];
             customers_1.customers.map((customer, index) => {
                 if (customer.id === customerId) {
-                    foundCustomer.push(customer);
+                    foundCustomer.push(customerBody);
                     customers_1.customers.splice(index, 1, customerBody);
                 }
             });
