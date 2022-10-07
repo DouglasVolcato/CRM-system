@@ -8,7 +8,7 @@ export interface CustomerServicesInterface {
   };
 
   deleteCustomerUseCase: {
-    execute(customerId: number): Promise<unknown> | CustomerInterface;
+    execute(customerId: string): Promise<unknown> | CustomerInterface;
   };
 
   getAllCustomerUseCase: {
@@ -16,7 +16,7 @@ export interface CustomerServicesInterface {
   };
 
   getCustomerByIdUseCase: {
-    execute(customerId: number): Promise<unknown> | CustomerInterface;
+    execute(customerId: string): Promise<unknown> | CustomerInterface;
   };
 
   getCustomerByNameUseCase: {
@@ -25,7 +25,7 @@ export interface CustomerServicesInterface {
 
   updateCustomerUseCase: {
     execute(
-      customerId: number,
+      customerId: string,
       customerBody: CustomerInterface
     ): Promise<unknown> | CustomerInterface;
   };

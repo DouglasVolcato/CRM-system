@@ -24,16 +24,16 @@ export class UserRepository {
     });
   }
 
-  getUserById(userId: number) {
+  getUserById(userId: any) {
     return new Promise((resolve) => {
       const foundUser = users.filter(
-        (user: UserInterface) => user.id === userId
+        (user: UserInterface) => user === userId
       );
       resolve(foundUser[0]);
     });
   }
 
-  deleteUser(userId: number) {
+  deleteUser(userId: string) {
     return new Promise((resolve) => {
       const foundUser: UserInterface[] = [];
       users.map((user: UserInterface, index: number) => {
@@ -46,7 +46,7 @@ export class UserRepository {
     });
   }
 
-  updateUser(userId: number, userBody: UserInterface) {
+  updateUser(userId: string, userBody: UserInterface) {
     return new Promise((resolve) => {
       const foundUser: UserInterface[] = [];
       users.map((user: UserInterface, index: number) => {

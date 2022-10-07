@@ -6,7 +6,7 @@ export interface UserServicesInterface {
   };
 
   deleteUserUsecase: {
-    execute(userId: number): Promise<unknown> | UserInterface;
+    execute(userId: string): Promise<unknown> | UserInterface;
   };
 
   getAllUserUseCase: {
@@ -14,7 +14,7 @@ export interface UserServicesInterface {
   };
 
   getUserByIdUseCase: {
-    execute(userId: number): Promise<unknown> | UserInterface;
+    execute(userId: string): Promise<unknown> | UserInterface;
   };
 
   getUserByNameUseCase: {
@@ -23,7 +23,7 @@ export interface UserServicesInterface {
 
   updateUserUseCase: {
     execute(
-      userId: number,
+      userId: string,
       userBody: UserInterface
     ): Promise<unknown> | UserInterface;
   };

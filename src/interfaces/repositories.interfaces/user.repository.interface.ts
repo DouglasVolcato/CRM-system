@@ -7,12 +7,12 @@ export interface UserRepositoryInterface {
 
   getUserByName(userName: string): Promise<unknown> | UserInterface[];
 
-  getUserById(userId: number): Promise<unknown> | UserInterface;
+  getUserById(userId: string): Promise<unknown> | UserInterface;
 
-  deleteUser(userId: number): Promise<unknown> | UserInterface;
+  deleteUser(userId: string): Promise<unknown> | UserInterface;
 
   updateUser(
-    userId: number,
+    userId: string,
     userBody: UserInterface
   ): Promise<unknown> | UserInterface;
 }

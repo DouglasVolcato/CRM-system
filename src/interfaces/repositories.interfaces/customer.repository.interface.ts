@@ -11,12 +11,12 @@ export interface CustomerRepositoryInterface {
     customerName: string
   ): Promise<unknown> | CustomerInterface[];
 
-  getCustomerById(customerId: number): Promise<unknown> | CustomerInterface;
+  getCustomerById(customerId: string): Promise<unknown> | CustomerInterface;
 
-  deleteCustomer(customerId: number): Promise<unknown> | CustomerInterface;
+  deleteCustomer(customerId: string): Promise<unknown> | CustomerInterface;
 
   updateCustomer(
-    customerId: number,
+    customerId: string,
     customerBody: CustomerInterface
   ): Promise<unknown> | CustomerInterface;
 }

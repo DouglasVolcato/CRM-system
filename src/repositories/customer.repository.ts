@@ -24,7 +24,7 @@ export class CustomerRepository {
     });
   }
 
-  getCustomerById(customerId: number) {
+  getCustomerById(customerId: string) {
     return new Promise((resolve) => {
       const foundCustomer = customers.filter(
         (customer: CustomerInterface) => customer.id === customerId
@@ -33,7 +33,7 @@ export class CustomerRepository {
     });
   }
 
-  deleteCustomer(customerId: number) {
+  deleteCustomer(customerId: string) {
     return new Promise((resolve) => {
       const foundCustomer: CustomerInterface[] = [];
       customers.map((customer: CustomerInterface, index: number) => {
@@ -46,10 +46,10 @@ export class CustomerRepository {
     });
   }
 
-  updateCustomer(customerId: number, customerBody: CustomerInterface) {
+  updateCustomer(customerId: string, customerBody: CustomerInterface) {
     return new Promise((resolve) => {
       const foundCustomer: CustomerInterface[] = [];
-      customers.map((customer: CustomerInterface, index, number) => {
+      customers.map((customer: CustomerInterface, index: number) => {
         if (customer.id === customerId) {
           foundCustomer.push(customer);
           customers.splice(index, 1, customerBody);
