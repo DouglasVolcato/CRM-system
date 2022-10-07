@@ -39,7 +39,7 @@ class CustomerController {
     deleteCustomerController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/delete-customers/", "").split("/")[3];
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/delete-customer/", "");
             if (id) {
                 const deletedCustomer = yield this.services.deleteCustomerUseCase.execute(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
@@ -59,7 +59,7 @@ class CustomerController {
     getCustomerByIdController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/find-customers-by-id/", "").split("/")[3];
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/find-customer-by-id/", "");
             if (id) {
                 const foundCustomer = yield this.services.getCustomerByIdUseCase.execute(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
@@ -82,25 +82,31 @@ class CustomerController {
         });
     }
     updateCustomerController(req, res) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            const customerId = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/update-customer/", "");
             let body = "";
-            req.on("data", (chunk) => {
-                body += chunk.toString();
-            });
-            return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
-                const { id, name, age, phone, city, notes } = yield JSON.parse(body);
-                const customerObj = {
-                    id,
-                    name,
-                    age,
-                    phone,
-                    city,
-                    notes,
-                };
-                const updatedCustomer = yield this.services.updateCustomerUseCase.execute(id, customerObj);
-                res.writeHead(200, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify(updatedCustomer));
-            }));
+            if (customerId) {
+                req.on("data", (chunk) => {
+                    body += chunk.toString();
+                });
+                return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
+                    const { id, name, age, phone, city, notes } = yield JSON.parse(body);
+                    const customerObj = {
+                        id,
+                        name,
+                        age,
+                        phone,
+                        city,
+                        notes,
+                    };
+                    const updatedCustomer = yield this.services.updateCustomerUseCase.execute(customerId, customerObj);
+                    res.writeHead(200, { "Content-Type": "application/json" });
+                    return res.end(JSON.stringify(updatedCustomer));
+                }));
+            }
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end({ message: "Invalid url." });
         });
     }
 }

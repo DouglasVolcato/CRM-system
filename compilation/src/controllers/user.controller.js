@@ -38,7 +38,7 @@ class UserController {
     deleteUserController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", "").split("/")[3];
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", "");
             if (id) {
                 const deletedUser = yield this.services.deleteUserUsecase.execute(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
@@ -60,7 +60,7 @@ class UserController {
     getUserByIdController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", "").split("/")[3];
+            const id = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", "");
             if (id) {
                 const foundUser = yield this.services.getUserByIdUseCase.execute(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
@@ -74,7 +74,7 @@ class UserController {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             if (req.url) {
-                const name = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-name/", "");
+                const name = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-users-by-name/", "");
                 const foundUser = yield this.services.getUserByNameUseCase.execute(name);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 return res.end(JSON.stringify(foundUser));
@@ -84,24 +84,30 @@ class UserController {
         });
     }
     updateUserController(req, res) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            const userId = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/update-user/", "");
             let body = "";
-            req.on("data", (chunk) => {
-                body += chunk.toString();
-            });
-            return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
-                const { id, name, username, email, password } = yield JSON.parse(body);
-                const userObj = {
-                    id,
-                    name,
-                    username,
-                    email,
-                    password,
-                };
-                const updatedUser = yield this.services.updateUserUseCase.execute(id, userObj);
-                res.writeHead(200, { "Content-Type": "application/json" });
-                return res.end(JSON.stringify(updatedUser));
-            }));
+            if (userId) {
+                req.on("data", (chunk) => {
+                    body += chunk.toString();
+                });
+                return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
+                    const { id, name, username, email, password } = yield JSON.parse(body);
+                    const userObj = {
+                        id,
+                        name,
+                        username,
+                        email,
+                        password,
+                    };
+                    const updatedUser = yield this.services.updateUserUseCase.execute(userId, userObj);
+                    res.writeHead(200, { "Content-Type": "application/json" });
+                    return res.end(JSON.stringify(updatedUser));
+                }));
+            }
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end({ message: "Invalid url." });
         });
     }
 }

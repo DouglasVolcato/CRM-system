@@ -43,7 +43,7 @@ export class CustomerController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const id = req.url?.replace("/customers/delete-customers/", "").split("/")[3];
+    const id = req.url?.replace("/customers/delete-customer/", "");
     if (id) {
       const deletedCustomer = await this.services.deleteCustomerUseCase.execute(
         id
@@ -68,9 +68,7 @@ export class CustomerController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const id = req.url
-      ?.replace("/customers/find-customers-by-id/", "")
-      .split("/")[3];
+    const id = req.url?.replace("/customers/find-customer-by-id/", "");
     if (id) {
       const foundCustomer = await this.services.getCustomerByIdUseCase.execute(
         id
@@ -101,30 +99,37 @@ export class CustomerController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
+    const customerId = req.url?.replace("/customers/update-customer/", "");
+
     let body = "";
 
-    req.on("data", (chunk: any) => {
-      body += chunk.toString();
-    });
+    if (customerId) {
+      req.on("data", (chunk: any) => {
+        body += chunk.toString();
+      });
 
-    return req.on("end", async () => {
-      const { id, name, age, phone, city, notes } = await JSON.parse(body);
+      return req.on("end", async () => {
+        const { id, name, age, phone, city, notes } = await JSON.parse(body);
 
-      const customerObj = {
-        id,
-        name,
-        age,
-        phone,
-        city,
-        notes,
-      };
+        const customerObj = {
+          id,
+          name,
+          age,
+          phone,
+          city,
+          notes,
+        };
 
-      const updatedCustomer = await this.services.updateCustomerUseCase.execute(
-        id,
-        customerObj
-      );
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(updatedCustomer));
-    });
+        const updatedCustomer =
+          await this.services.updateCustomerUseCase.execute(
+            customerId,
+            customerObj
+          );
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(updatedCustomer));
+      });
+    }
+    res.writeHead(400, { "Content-Type": "application/json" });
+    return res.end({ message: "Invalid url." });
   }
 }
