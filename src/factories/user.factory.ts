@@ -13,6 +13,7 @@ export function makeUserFactory(
 
   const createUserUsecase = new services.CreateUserUsecase(userRepository);
   const deleteUserUsecase = new services.DeleteUserUsecase(userRepository);
+  const getAllUserUseCase = new services.GetAllUserUseCase(userRepository);
   const getUserByIdUseCase = new services.GetUserByIdUseCase(userRepository);
   const getUserByNameUseCase = new services.GetUserByNameUseCase(
     userRepository
@@ -22,6 +23,7 @@ export function makeUserFactory(
   const userController = new UserController({
     createUserUsecase,
     deleteUserUsecase,
+    getAllUserUseCase,
     getUserByIdUseCase,
     getUserByNameUseCase,
     updateUserUseCase,
