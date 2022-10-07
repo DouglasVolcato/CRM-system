@@ -1,5 +1,6 @@
 import { UserRepositoryInterface } from "../../interfaces/repositories.interfaces/user.repository.interface";
 import { UserInterface } from "../../interfaces/entities.interfaces/user.interface";
+import { User } from "../../entities/user.entity";
 
 export class CreateUserUsecase {
   repository: UserRepositoryInterface;
@@ -8,10 +9,10 @@ export class CreateUserUsecase {
     this.repository = repository;
   }
 
-  execute(userBody: UserInterface) {
-    return new Promise((resolve) => {
-      const newUser = this.repository.createUser(userBody);
-      resolve(newUser);
-    });
+  async execute(userBody: UserInterface) {
+    const body = new User(userBody);
+    body.validate();
+    const newUser = await this.repository.createUser(body.getUser());
+    return newUser;
   }
 }

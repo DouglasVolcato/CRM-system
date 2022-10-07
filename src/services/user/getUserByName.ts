@@ -7,10 +7,8 @@ export class GetUserByNameUseCase {
     this.repository = repository;
   }
 
-  execute(userName: string) {
-    return new Promise((resolve) => {
-      const foundUser = this.repository.getUserByName(userName);
-      resolve(foundUser);
-    });
+  async execute(userName: string) {
+    const foundUser = await this.repository.getUserByName(userName);
+    return foundUser;
   }
 }

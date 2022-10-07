@@ -8,13 +8,24 @@ export class UpdateCustomerUseCase {
     this.repository = repository;
   }
 
-  execute(customerId: number, customerBody: CustomerInterface) {
-    return new Promise((resolve) => {
-      const updatedCustoer = this.repository.updateCustomer(
-        customerId,
-        customerBody
-      );
-      resolve(updatedCustoer);
-    });
+  async execute(customerId: string, customerBody: CustomerInterface) {
+    const foundCustomer: any = await this.repository.getCustomerById(
+      customerId
+    );
+
+    const body = {
+      id: foundCustomer.id,
+      name: customerBody.name ?? foundCustomer.name,
+      age: customerBody.age ?? foundCustomer.age,
+      phone: customerBody.phone ?? foundCustomer.phone,
+      city: customerBody.city ?? foundCustomer.city,
+      notes: customerBody.notes ?? foundCustomer.notes,
+    };
+
+    const updatedCustomer = await this.repository.updateCustomer(
+      customerId,
+      body
+    );
+    return updatedCustomer;
   }
 }

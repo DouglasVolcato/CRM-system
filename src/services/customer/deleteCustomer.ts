@@ -7,10 +7,8 @@ export class DeleteCustomerUseCase {
     this.repository = repository;
   }
 
-  execute(customerId: number) {
-    return new Promise((resolve) => {
-      const deletedCustomer = this.repository.deleteCustomer(customerId);
-      resolve(deletedCustomer);
-    });
+  async execute(customerId: string) {
+    const deletedCustomer = await this.repository.deleteCustomer(customerId);
+    return deletedCustomer;
   }
 }

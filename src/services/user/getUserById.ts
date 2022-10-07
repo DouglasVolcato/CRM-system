@@ -7,10 +7,8 @@ export class GetUserByIdUseCase {
     this.repository = repository;
   }
 
-  execute(userId: number) {
-    return new Promise((resolve) => {
-      const foundUser = this.repository.getUserById(userId);
-      resolve(foundUser);
-    });
+  async execute(userId: string) {
+    const foundUser = await this.repository.getUserById(userId);
+    return foundUser;
   }
 }

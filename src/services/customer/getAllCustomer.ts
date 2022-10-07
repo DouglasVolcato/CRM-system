@@ -7,10 +7,8 @@ export class GetAllCustomerUseCase {
     this.repository = repository;
   }
 
-  execute() {
-    return new Promise((resolve) => {
-      const foundCustomers = this.repository.getAllCustomers();
-      resolve(foundCustomers);
-    });
+  async execute() {
+    const foundCustomers = await this.repository.getAllCustomers();
+    return foundCustomers;
   }
 }

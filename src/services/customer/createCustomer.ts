@@ -1,5 +1,6 @@
 import { CustomerRepositoryInterface } from "../../interfaces/repositories.interfaces/customer.repository.interface";
 import { CustomerInterface } from "../../interfaces/entities.interfaces/customer.interface";
+import { Customer } from "../../entities/customer.entity";
 
 export class CreateCustomerUseCase {
   repository: CustomerRepositoryInterface;
@@ -8,10 +9,12 @@ export class CreateCustomerUseCase {
     this.repository = repository;
   }
 
-  execute(customerBody: CustomerInterface) {
-    return new Promise((resolve) => {
-      const createCustomer = this.repository.createCustomer(customerBody);
-      resolve(createCustomer);
-    });
+  async execute(customerBody: CustomerInterface) {
+    const body = new Customer(customerBody);
+    body.validate();
+    const createCustomer = await this.repository.createCustomer(
+      body.getCustomer()
+    );
+    return createCustomer;
   }
 }

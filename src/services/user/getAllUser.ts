@@ -7,10 +7,8 @@ export class GetAllUserUseCase {
     this.repository = repository;
   }
 
-  execute() {
-    return new Promise((resolve) => {
-      const foundUsers = this.repository.getAllUsers();
-      resolve(foundUsers);
-    });
+  async execute() {
+    const foundUsers = await this.repository.getAllUsers();
+    return foundUsers;
   }
 }

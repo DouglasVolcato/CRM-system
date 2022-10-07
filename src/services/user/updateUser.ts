@@ -8,10 +8,10 @@ export class UpdateUserUseCase {
     this.repository = repository;
   }
 
-  execute(userId: number, userBody: UserInterface) {
-    return new Promise((resolve) => {
-      const updatedUser = this.repository.updateUser(userId, userBody);
-      resolve(updatedUser);
-    });
+  async execute(userId: string, userBody: UserInterface) {
+    const foundUser: any = await this.repository.getUserById(userId);
+    const body = Object.assign(foundUser, userBody);
+    const updatedUser = await this.repository.updateUser(userId, body);
+    return updatedUser;
   }
 }

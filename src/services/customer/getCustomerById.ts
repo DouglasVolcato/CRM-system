@@ -7,10 +7,8 @@ export class GetCustomerByIdUseCase {
     this.repository = repository;
   }
 
-  execute(customerId: number) {
-    return new Promise((resolve) => {
-      const foundCustomer = this.repository.getCustomerById(customerId);
-      resolve(foundCustomer);
-    });
+  async execute(customerId: string) {
+    const foundCustomer = await this.repository.getCustomerById(customerId);
+    return foundCustomer;
   }
 }
