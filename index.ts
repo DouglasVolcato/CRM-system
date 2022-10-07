@@ -18,5 +18,5 @@ const server = http.createServer((req, res) => {
 });
 
 server
-  .listen(3000, () => console.log("http://localhost:" + port))
+  .listen(port, () => console.log("http://localhost:" + port))
   .on("error", (err) => console.log(err));
