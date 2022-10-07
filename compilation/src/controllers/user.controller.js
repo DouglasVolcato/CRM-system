@@ -44,6 +44,13 @@ class UserController {
             return res.end(JSON.stringify(deletedUser));
         });
     }
+    getAllUsersController(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const foundUsers = yield this.services.getAllUserUseCase.execute();
+            res.writeHead(200, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify(foundUsers));
+        });
+    }
     getUserByIdController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {

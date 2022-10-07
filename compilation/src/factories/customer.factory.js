@@ -32,17 +32,19 @@ function makeCustomerFactory(router, req, res) {
     const customerRepository = new customer_repository_1.CustomerRepository();
     const createCustomerUseCase = new services.CreateCustomerUseCase(customerRepository);
     const deleteCustomerUseCase = new services.DeleteCustomerUseCase(customerRepository);
+    const getAllCustomerUseCase = new services.GetAllCustomerUseCase(customerRepository);
     const getCustomerByIdUseCase = new services.GetCustomerByIdUseCase(customerRepository);
     const getCustomerByNameUseCase = new services.GetCustomerByNameUseCase(customerRepository);
     const updateCustomerUseCase = new services.UpdateCustomerUseCase(customerRepository);
     const customerController = new customer_controller_1.CustomerController({
         createCustomerUseCase,
         deleteCustomerUseCase,
+        getAllCustomerUseCase,
         getCustomerByIdUseCase,
         getCustomerByNameUseCase,
         updateCustomerUseCase,
     });
     const customerRoutes = new customer_routes_1.CustomerRoutes(customerController, router, req, res);
-    return customerRoutes;
+    return customerRoutes.route();
 }
 exports.makeCustomerFactory = makeCustomerFactory;

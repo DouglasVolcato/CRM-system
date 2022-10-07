@@ -39,16 +39,23 @@ class CustomerController {
     deleteCustomerController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/delete-user/", ""));
+            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/delete-customers/", ""));
             const deletedCustomer = yield this.services.deleteCustomerUseCase.execute(id);
             res.writeHead(200, { "Content-Type": "application/json" });
             return res.end(JSON.stringify(deletedCustomer));
         });
     }
+    getAllCustomersController(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const foundCustomers = yield this.services.getAllCustomerUseCase.execute();
+            res.writeHead(200, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify(foundCustomers));
+        });
+    }
     getCustomerByIdController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-id/", ""));
+            const id = Number((_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/customers/find-customers-by-id/", ""));
             const foundCustomer = yield this.services.getCustomerByIdUseCase.execute(id);
             res.writeHead(200, { "Content-Type": "application/json" });
             return res.end(JSON.stringify(foundCustomer));
@@ -57,7 +64,7 @@ class CustomerController {
     getCustomerByNameController(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             if (req.url) {
-                const name = req.url.replace("/users/find-user-by-name/", "");
+                const name = req.url.replace("/customers/find-customers-by-name/", "");
                 const foundCustomer = yield this.services.getCustomerByNameUseCase.execute(name);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 return res.end(JSON.stringify(foundCustomer));

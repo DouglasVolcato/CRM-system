@@ -27,7 +27,7 @@ const customer_factory_1 = require("./src/factories/customer.factory");
 const user_factory_1 = require("./src/factories/user.factory");
 const envVariables_1 = require("./src/config/envVariables");
 const http = __importStar(require("http"));
-const { port, encryptKey } = (0, envVariables_1.envVariables)();
+const { port } = (0, envVariables_1.envVariables)();
 const server = http.createServer((req, res) => {
     const router = req.url;
     if (router === null || router === void 0 ? void 0 : router.includes("/users/")) {
@@ -41,7 +41,6 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ message: "Route not found" }));
     }
 });
-// console.log(port, encryptKey);
 server
-    .listen(3000, () => console.log("http://localhost:" + port))
+    .listen(port, () => console.log("http://localhost:" + port))
     .on("error", (err) => console.log(err));
