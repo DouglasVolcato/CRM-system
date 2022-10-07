@@ -8,7 +8,16 @@ export class GetCustomerByNameUseCase {
   }
 
   async execute(customerName: string) {
-    const foundCustomer = await this.repository.getCustomerByName(customerName);
-    return foundCustomer;
+    const foundCustomers: any = await this.repository.getCustomerByName(
+      customerName
+    );
+    if (
+      foundCustomers === null ||
+      foundCustomers === undefined ||
+      foundCustomers.length === 0
+    ) {
+      throw new Error("Customers not found.");
+    }
+    return foundCustomers;
   }
 }

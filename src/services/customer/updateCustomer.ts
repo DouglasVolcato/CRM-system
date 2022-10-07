@@ -13,6 +13,10 @@ export class UpdateCustomerUseCase {
       customerId
     );
 
+    if (foundCustomer === undefined) {
+      throw new Error("Customer not found.");
+    }
+
     const body = {
       id: foundCustomer.id,
       name: customerBody.name ?? foundCustomer.name,

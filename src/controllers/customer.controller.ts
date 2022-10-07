@@ -19,23 +19,30 @@ export class CustomerController {
     });
 
     return req.on("end", async () => {
-      const { id, name, age, phone, city, notes } = await JSON.parse(body);
+      try {
+        const { id, name, age, phone, city, notes } = await JSON.parse(body);
 
-      const customerObj = {
-        id,
-        name,
-        age,
-        phone,
-        city,
-        notes,
-      };
+        const customerObj = {
+          id,
+          name,
+          age,
+          phone,
+          city,
+          notes,
+        };
 
-      const newCustomer = await this.services.createCustomerUseCase.execute(
-        customerObj
-      );
+        const newCustomer = await this.services.createCustomerUseCase.execute(
+          customerObj
+        );
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(newCustomer));
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(newCustomer));
+      } catch (err) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(
+          JSON.stringify({ Message: "Error creating customer: " + err })
+        );
+      }
     });
   }
 
@@ -43,25 +50,39 @@ export class CustomerController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const id = req.url?.replace("/customers/delete-customer/", "");
-    if (id) {
-      const deletedCustomer = await this.services.deleteCustomerUseCase.execute(
-        id
+    try {
+      const id = req.url?.replace("/customers/delete-customer/", "");
+      if (id) {
+        const deletedCustomer =
+          await this.services.deleteCustomerUseCase.execute(id);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(deletedCustomer));
+      }
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Invalid url." }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({ Message: "Error deleting customer: " + err })
       );
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(deletedCustomer));
     }
-    res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
   }
 
   async getAllCustomersController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const foundCustomers = await this.services.getAllCustomerUseCase.execute();
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(foundCustomers));
+    try {
+      const foundCustomers =
+        await this.services.getAllCustomerUseCase.execute();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(foundCustomers));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({ Message: "Error finding customers: " + err })
+      );
+    }
   }
 
   async getCustomerByIdController(
@@ -69,30 +90,43 @@ export class CustomerController {
     res: http.ServerResponse
   ) {
     const id = req.url?.replace("/customers/find-customer-by-id/", "");
-    if (id) {
-      const foundCustomer = await this.services.getCustomerByIdUseCase.execute(
-        id
+    try {
+      if (id) {
+        const foundCustomer =
+          await this.services.getCustomerByIdUseCase.execute(id);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(foundCustomer));
+      }
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Invalid url." }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({ message: "Error finding customer: " + err })
       );
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(foundCustomer));
     }
-    res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
   }
 
   async getCustomerByNameController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    if (req.url) {
-      const name = req.url.replace("/customers/find-customers-by-name/", "");
-      const foundCustomer =
-        await this.services.getCustomerByNameUseCase.execute(name);
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(foundCustomer));
+    try {
+      if (req.url) {
+        const name = req.url.replace("/customers/find-customers-by-name/", "");
+        const foundCustomer =
+          await this.services.getCustomerByNameUseCase.execute(name);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(foundCustomer));
+      }
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Invalid url." }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({ Message: "Error finding customer: " + err })
+      );
     }
-    res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
   }
 
   async updateCustomerController(
@@ -120,16 +154,23 @@ export class CustomerController {
           notes,
         };
 
-        const updatedCustomer =
-          await this.services.updateCustomerUseCase.execute(
-            customerId,
-            customerObj
+        try {
+          const updatedCustomer =
+            await this.services.updateCustomerUseCase.execute(
+              customerId,
+              customerObj
+            );
+          res.writeHead(200, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify(updatedCustomer));
+        } catch (err) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          return res.end(
+            JSON.stringify({ Message: "Error updating customer: " + err })
           );
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(updatedCustomer));
+        }
       });
     }
     res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
+    return res.end(JSON.stringify({ message: "Invalid url." }));
   }
 }

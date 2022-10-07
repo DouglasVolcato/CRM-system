@@ -8,7 +8,11 @@ export class GetCustomerByIdUseCase {
   }
 
   async execute(customerId: string) {
+    console.log({ id: customerId });
     const foundCustomer = await this.repository.getCustomerById(customerId);
+    if (foundCustomer === undefined) {
+      throw new Error("Customer not found.");
+    }
     return foundCustomer;
   }
 }

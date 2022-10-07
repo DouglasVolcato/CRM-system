@@ -9,6 +9,9 @@ export class DeleteCustomerUseCase {
 
   async execute(customerId: string) {
     const deletedCustomer = await this.repository.deleteCustomer(customerId);
+    if (deletedCustomer === undefined) {
+      throw new Error("Customer not found to delete.");
+    }
     return deletedCustomer;
   }
 }

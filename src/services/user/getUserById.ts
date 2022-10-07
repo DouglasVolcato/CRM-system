@@ -9,6 +9,9 @@ export class GetUserByIdUseCase {
 
   async execute(userId: string) {
     const foundUser = await this.repository.getUserById(userId);
+    if (foundUser === undefined) {
+      throw new Error("User not found.");
+    }
     return foundUser;
   }
 }

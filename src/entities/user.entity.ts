@@ -14,7 +14,7 @@ export class User {
     this.name = userBody.name;
     this.username = userBody.username;
     this.email = userBody.email;
-    this.password = cryptography.encryptPassword(userBody.password);
+    this.password = userBody.password;
   }
 
   validate() {
@@ -35,7 +35,7 @@ export class User {
       name: this.name,
       username: this.username,
       email: this.email,
-      password: this.password,
+      password: cryptography.encryptPassword(this.password),
     };
   }
 }

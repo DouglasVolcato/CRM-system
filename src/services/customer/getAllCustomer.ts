@@ -8,7 +8,14 @@ export class GetAllCustomerUseCase {
   }
 
   async execute() {
-    const foundCustomers = await this.repository.getAllCustomers();
+    const foundCustomers: any = await this.repository.getAllCustomers();
+    if (
+      foundCustomers === null ||
+      foundCustomers === undefined ||
+      foundCustomers.length === 0
+    ) {
+      throw new Error("There are no customers in database.");
+    }
     return foundCustomers;
   }
 }

@@ -19,20 +19,27 @@ export class UserController {
     });
 
     return req.on("end", async () => {
-      const { id, name, username, email, password } = await JSON.parse(body);
+      try {
+        const { id, name, username, email, password } = await JSON.parse(body);
 
-      const userObj = {
-        id,
-        name,
-        username,
-        email,
-        password,
-      };
+        const userObj = {
+          id,
+          name,
+          username,
+          email,
+          password,
+        };
 
-      const newUser = await this.services.createUserUsecase.execute(userObj);
+        const newUser = await this.services.createUserUsecase.execute(userObj);
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(newUser));
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(newUser));
+      } catch (err) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end(
+          JSON.stringify({ Message: "Error creating user: " + err })
+        );
+      }
     });
   }
 
@@ -40,14 +47,21 @@ export class UserController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const id = req.url?.replace("/users/delete-user/", "");
-    if (id) {
-      const deletedUser = await this.services.deleteUserUsecase.execute(id);
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(deletedUser));
-    } else {
+    try {
+      const id = req.url?.replace("/users/delete-user/", "");
+      if (id) {
+        const deletedUser = await this.services.deleteUserUsecase.execute(id);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(deletedUser));
+      } else {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        return res.end({ message: "Invalid url." });
+      }
+    } catch (err) {
       res.writeHead(400, { "Content-Type": "application/json" });
-      return res.end({ message: "Invalid url." });
+      return res.end(
+        JSON.stringify({ Message: "Error deleting customer: " + err })
+      );
     }
   }
 
@@ -55,9 +69,16 @@ export class UserController {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    const foundUsers = await this.services.getAllUserUseCase.execute();
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(foundUsers));
+    try {
+      const foundUsers = await this.services.getAllUserUseCase.execute();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(foundUsers));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(
+        JSON.stringify({ Message: "Error finding users: " + err })
+      );
+    }
   }
 
   async getUserByIdController(
@@ -65,27 +86,39 @@ export class UserController {
     res: http.ServerResponse
   ) {
     const id = req.url?.replace("/users/find-user-by-id/", "");
-    if (id) {
-      const foundUser = await this.services.getUserByIdUseCase.execute(id);
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(foundUser));
+    try {
+      if (id) {
+        const foundUser = await this.services.getUserByIdUseCase.execute(id);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(foundUser));
+      }
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Invalid url." }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Error finding user: " + err }));
     }
-    res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
   }
 
   async getUserByNameController(
     req: http.IncomingMessage,
     res: http.ServerResponse
   ) {
-    if (req.url) {
-      const name = req.url?.replace("/users/find-users-by-name/", "");
-      const foundUser = await this.services.getUserByNameUseCase.execute(name);
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(foundUser));
+    try {
+      if (req.url) {
+        const name = req.url?.replace("/users/find-users-by-name/", "");
+        const foundUser = await this.services.getUserByNameUseCase.execute(
+          name
+        );
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(foundUser));
+      }
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Invalid url." }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Error finding user: " + err }));
     }
-    res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
   }
 
   async updateUserController(
@@ -111,15 +144,22 @@ export class UserController {
           password,
         };
 
-        const updatedUser = await this.services.updateUserUseCase.execute(
-          userId,
-          userObj
-        );
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(updatedUser));
+        try {
+          const updatedUser = await this.services.updateUserUseCase.execute(
+            userId,
+            userObj
+          );
+          res.writeHead(200, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify(updatedUser));
+        } catch (err) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          return res.end(
+            JSON.stringify({ Message: "Error updating user: " + err })
+          );
+        }
       });
     }
     res.writeHead(400, { "Content-Type": "application/json" });
-    return res.end({ message: "Invalid url." });
+    return res.end(JSON.stringify({ message: "Invalid url." }));
   }
 }

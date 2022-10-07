@@ -9,6 +9,9 @@ export class DeleteUserUsecase {
 
   async execute(userId: string) {
     const deletedUser = await this.repository.deleteUser(userId);
+    if (deletedUser === undefined) {
+      throw new Error("User not found to delete.");
+    }
     return deletedUser;
   }
 }

@@ -8,7 +8,14 @@ export class GetUserByNameUseCase {
   }
 
   async execute(userName: string) {
-    const foundUser = await this.repository.getUserByName(userName);
-    return foundUser;
+    const foundUsers: any = await this.repository.getUserByName(userName);
+    if (
+      foundUsers === null ||
+      foundUsers === undefined ||
+      foundUsers.length === 0
+    ) {
+      throw new Error("Users not found.");
+    }
+    return foundUsers;
   }
 }
