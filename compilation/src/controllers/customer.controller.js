@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerController = void 0;
+const statusCodeGenerator_1 = require("../helpers/statusCodeGenerator");
 class CustomerController {
     constructor(services) {
         this.services = services;
@@ -32,11 +33,13 @@ class CustomerController {
                         notes,
                     };
                     const newCustomer = yield this.services.createCustomerUseCase.execute(customerObj);
-                    res.writeHead(200, { "Content-Type": "application/json" });
+                    res.writeHead(201, { "Content-Type": "application/json" });
                     return res.end(JSON.stringify(newCustomer));
                 }
                 catch (err) {
-                    res.writeHead(400, { "Content-Type": "application/json" });
+                    res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                        "Content-Type": "application/json",
+                    });
                     return res.end(JSON.stringify({ Message: "Error creating customer: " + err }));
                 }
             }));
@@ -56,7 +59,9 @@ class CustomerController {
                 return res.end(JSON.stringify({ message: "Invalid url." }));
             }
             catch (err) {
-                res.writeHead(400, { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                    "Content-Type": "application/json",
+                });
                 return res.end(JSON.stringify({ Message: "Error deleting customer: " + err }));
             }
         });
@@ -65,11 +70,11 @@ class CustomerController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const foundCustomers = yield this.services.getAllCustomerUseCase.execute();
-                res.writeHead(200, { "Content-Type": "application/json" });
+                res.writeHead(302, { "Content-Type": "application/json" });
                 return res.end(JSON.stringify(foundCustomers));
             }
             catch (err) {
-                res.writeHead(400, { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
                 return res.end(JSON.stringify({ Message: "Error finding customers: " + err }));
             }
         });
@@ -81,14 +86,14 @@ class CustomerController {
             try {
                 if (id) {
                     const foundCustomer = yield this.services.getCustomerByIdUseCase.execute(id);
-                    res.writeHead(200, { "Content-Type": "application/json" });
+                    res.writeHead(302, { "Content-Type": "application/json" });
                     return res.end(JSON.stringify(foundCustomer));
                 }
                 res.writeHead(400, { "Content-Type": "application/json" });
                 return res.end(JSON.stringify({ message: "Invalid url." }));
             }
             catch (err) {
-                res.writeHead(400, { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
                 return res.end(JSON.stringify({ message: "Error finding customer: " + err }));
             }
         });
@@ -99,14 +104,14 @@ class CustomerController {
                 if (req.url) {
                     const name = req.url.replace("/customers/find-customers-by-name/", "");
                     const foundCustomer = yield this.services.getCustomerByNameUseCase.execute(name);
-                    res.writeHead(200, { "Content-Type": "application/json" });
+                    res.writeHead(302, { "Content-Type": "application/json" });
                     return res.end(JSON.stringify(foundCustomer));
                 }
                 res.writeHead(400, { "Content-Type": "application/json" });
                 return res.end(JSON.stringify({ message: "Invalid url." }));
             }
             catch (err) {
-                res.writeHead(400, { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
                 return res.end(JSON.stringify({ Message: "Error finding customer: " + err }));
             }
         });
@@ -136,7 +141,7 @@ class CustomerController {
                         return res.end(JSON.stringify(updatedCustomer));
                     }
                     catch (err) {
-                        res.writeHead(400, { "Content-Type": "application/json" });
+                        res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
                         return res.end(JSON.stringify({ Message: "Error updating customer: " + err }));
                     }
                 }));
