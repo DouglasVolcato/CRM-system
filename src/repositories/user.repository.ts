@@ -3,33 +3,59 @@ import { users } from "../mocks/user";
 
 export class UserRepository {
   createUser(userBody: UserInterface) {
-    users.push(userBody);
-    return { message: "User created." };
+    return new Promise((resolve) => {
+      users.push(userBody);
+      resolve(userBody);
+    });
+  }
+
+  getAllUsers() {
+    return new Promise((resolve) => {
+      resolve(users);
+    });
   }
 
   getUserByName(userName: string) {
-    return users.filter((user) => user.name === userName);
+    return new Promise((resolve) => {
+      const foundUser = users.filter((user: UserInterface) =>
+        user.name.includes(userName)
+      );
+      resolve(foundUser);
+    });
   }
 
   getUserById(userId: number) {
-    return users.filter((user) => user.id === userId);
+    return new Promise((resolve) => {
+      const foundUser = users.filter(
+        (user: UserInterface) => user.id === userId
+      );
+      resolve(foundUser[0]);
+    });
   }
 
   deleteUser(userId: number) {
-    users.map((user, index) => {
-      if (user.id === userId) {
-        users.splice(index, 1);
-      }
+    return new Promise((resolve) => {
+      const foundUser: UserInterface[] = [];
+      users.map((user: UserInterface, index: number) => {
+        if (user.id === userId) {
+          foundUser.push(user);
+          users.splice(index, 1);
+        }
+      });
+      resolve(foundUser[0]);
     });
-    return { message: "User deleted." };
   }
 
   updateUser(userId: number, userBody: UserInterface) {
-    users.map((user, index) => {
-      if (user.id === userId) {
-        users.splice(index, 1, userBody);
-      }
+    return new Promise((resolve) => {
+      const foundUser: UserInterface[] = [];
+      users.map((user: UserInterface, index: number) => {
+        if (user.id === userId) {
+          foundUser.push(user);
+          users.splice(index, 1, userBody);
+        }
+      });
+      resolve(foundUser[0]);
     });
-    return { message: "User updated." };
   }
 }
