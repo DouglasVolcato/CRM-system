@@ -92,10 +92,10 @@ exports.cryptography = {
             ? true
             : false;
     },
-    generateToken(password, key = hashKey) {
-        return exports.cryptography.encryptPassword(password + new Date().toISOString().split("T")[0], key);
+    generateToken(userEmail, key = hashKey) {
+        return exports.cryptography.encryptPassword(userEmail + new Date().toISOString().split("T")[0], key);
     },
-    validateToken(password, token) {
-        return exports.cryptography.generateToken(password) === token ? true : false;
+    validateToken(userEmail, token) {
+        return exports.cryptography.generateToken(userEmail) === token ? true : false;
     },
 };

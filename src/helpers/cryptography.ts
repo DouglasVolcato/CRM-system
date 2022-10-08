@@ -104,14 +104,14 @@ export const cryptography = {
       : false;
   },
 
-  generateToken(password: string, key: string = hashKey) {
+  generateToken(userEmail: string, key: string = hashKey) {
     return cryptography.encryptPassword(
-      password + new Date().toISOString().split("T")[0],
+      userEmail + new Date().toISOString().split("T")[0],
       key
     );
   },
 
-  validateToken(password: string, token: string) {
-    return cryptography.generateToken(password) === token ? true : false;
+  validateToken(userEmail: string, token: string) {
+    return cryptography.generateToken(userEmail) === token ? true : false;
   },
 };
