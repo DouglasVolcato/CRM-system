@@ -109,6 +109,30 @@ export class UserController {
     }
   }
 
+  async getUserByEmailController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
+    const email = req.url?.replace("/users/find-user-by-email/", "");
+
+    try {
+      if (email) {
+        const foundUser = await this.services.getUserByEmailUseCase.execute(
+          email
+        );
+        res.writeHead(302, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(foundUser));
+      }
+      res.writeHead(400, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ message: "Invalid url." }));
+    } catch (err) {
+      res.writeHead(statusCodeGenerator(err), {
+        "Content-Type": "application/json",
+      });
+      return res.end(JSON.stringify({ message: "Error finding user: " + err }));
+    }
+  }
+
   async getUserByNameController(
     req: http.IncomingMessage,
     res: http.ServerResponse
