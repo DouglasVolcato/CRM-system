@@ -34,6 +34,7 @@ function makeUserFactory(router, req, res) {
     const deleteUserUsecase = new services.DeleteUserUsecase(userRepository);
     const getAllUserUseCase = new services.GetAllUserUseCase(userRepository);
     const getUserByIdUseCase = new services.GetUserByIdUseCase(userRepository);
+    const getUserByEmailUseCase = new services.GetUserByEmailUseCase(userRepository);
     const getUserByNameUseCase = new services.GetUserByNameUseCase(userRepository);
     const updateUserUseCase = new services.UpdateUserUseCase(userRepository);
     const userController = new user_controller_1.UserController({
@@ -41,6 +42,7 @@ function makeUserFactory(router, req, res) {
         deleteUserUsecase,
         getAllUserUseCase,
         getUserByIdUseCase,
+        getUserByEmailUseCase,
         getUserByNameUseCase,
         updateUserUseCase,
     });

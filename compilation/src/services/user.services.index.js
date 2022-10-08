@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateUserUseCase = exports.GetUserByNameUseCase = exports.GetUserByIdUseCase = exports.GetAllUserUseCase = exports.DeleteUserUsecase = exports.CreateUserUsecase = void 0;
+exports.UpdateUserUseCase = exports.GetUserByNameUseCase = exports.GetUserByEmailUseCase = exports.GetUserByIdUseCase = exports.GetAllUserUseCase = exports.DeleteUserUsecase = exports.CreateUserUsecase = void 0;
 var createUser_1 = require("./user/createUser");
 Object.defineProperty(exports, "CreateUserUsecase", { enumerable: true, get: function () { return createUser_1.CreateUserUsecase; } });
 var deleteUser_1 = require("./user/deleteUser");
@@ -9,6 +9,8 @@ var getAllUser_1 = require("./user/getAllUser");
 Object.defineProperty(exports, "GetAllUserUseCase", { enumerable: true, get: function () { return getAllUser_1.GetAllUserUseCase; } });
 var getUserById_1 = require("./user/getUserById");
 Object.defineProperty(exports, "GetUserByIdUseCase", { enumerable: true, get: function () { return getUserById_1.GetUserByIdUseCase; } });
+var getUserByEmail_1 = require("./user/getUserByEmail");
+Object.defineProperty(exports, "GetUserByEmailUseCase", { enumerable: true, get: function () { return getUserByEmail_1.GetUserByEmailUseCase; } });
 var getUserByName_1 = require("./user/getUserByName");
 Object.defineProperty(exports, "GetUserByNameUseCase", { enumerable: true, get: function () { return getUserByName_1.GetUserByNameUseCase; } });
 var updateUser_1 = require("./user/updateUser");

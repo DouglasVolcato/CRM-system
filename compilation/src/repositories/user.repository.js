@@ -26,6 +26,12 @@ class UserRepository {
             resolve(foundUser[0]);
         });
     }
+    getUserByEmail(userEmail) {
+        return new Promise((resolve) => {
+            const foundUser = user_1.users.filter((user) => user.email === userEmail);
+            resolve(foundUser[0]);
+        });
+    }
     deleteUser(userId) {
         return new Promise((resolve) => {
             const foundUser = [];

@@ -103,6 +103,27 @@ class UserController {
             }
         });
     }
+    getUserByEmailController(req, res) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const email = (_a = req.url) === null || _a === void 0 ? void 0 : _a.replace("/users/find-user-by-email/", "");
+            try {
+                if (email) {
+                    const foundUser = yield this.services.getUserByEmailUseCase.execute(email);
+                    res.writeHead(302, { "Content-Type": "application/json" });
+                    return res.end(JSON.stringify(foundUser));
+                }
+                res.writeHead(400, { "Content-Type": "application/json" });
+                return res.end(JSON.stringify({ message: "Invalid url." }));
+            }
+            catch (err) {
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                    "Content-Type": "application/json",
+                });
+                return res.end(JSON.stringify({ message: "Error finding user: " + err }));
+            }
+        });
+    }
     getUserByNameController(req, res) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
