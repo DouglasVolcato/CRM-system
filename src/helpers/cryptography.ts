@@ -32,11 +32,42 @@ const letters = [
 ];
 
 export const cryptography = {
-  encryptPassword(password: string, key: string = hashKey) {
+  encryptPassword(password: string, refKey: string = hashKey) {
     const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
     const encryptKey = [];
     const passwordArr = [];
+
+    let key = "";
+
+    for (let i = 0; i < hashKey.length; i++) {
+      let ref1 = 0;
+      let ref2 = 0;
+      let count = 0;
+
+      if (password[i] === undefined) {
+        break;
+      }
+
+      if (numbers.indexOf(Number(refKey[i])) !== -1) {
+        ref1 = numbers.indexOf(Number(refKey[i]));
+      } else if (letters.indexOf(refKey[i].toLowerCase()) !== -1) {
+        ref1 = letters.indexOf(refKey[i].toLowerCase());
+      }
+
+      if (numbers.indexOf(Number(password[i])) !== -1) {
+        ref2 = numbers.indexOf(Number(password[i]));
+      } else if (letters.indexOf(password[i].toLowerCase()) !== -1) {
+        ref2 = letters.indexOf(password[i].toLowerCase());
+      }
+
+      if (count % 2 === 0) {
+        key = key + numbers[(ref1 + ref2) / 2];
+      } else {
+        key = key + letters[(ref1 + ref2) / 2];
+      }
+
+      count++;
+    }
 
     for (let i = 0; i < key.length; i++) {
       if (numbers.indexOf(Number(key[i])) !== -1) {
@@ -63,37 +94,6 @@ export const cryptography = {
     return passwordArr.toString().replace(/\,/g, "");
   },
 
-  decryptPassword(encryptedPassword: string, key: string = hashKey) {
-    const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-    const encryptKey = [];
-    const passwordArr = [];
-
-    for (let i = 0; i < key.length; i++) {
-      if (numbers.indexOf(Number(key[i])) !== -1) {
-        encryptKey.push(numbers.indexOf(Number(key[i])));
-      } else if (letters.indexOf(key[i].toLowerCase()) !== -1) {
-        encryptKey.push(letters.indexOf(key[i].toLowerCase()));
-      }
-    }
-
-    for (let i = 0; i < encryptedPassword.length; i++) {
-      passwordArr.push(encryptedPassword[i]);
-    }
-
-    for (let i = encryptKey.length - 1; i >= 0; i--) {
-      let count = 0;
-      passwordArr.pop();
-      while (count !== Number(encryptKey[i])) {
-        passwordArr.push(passwordArr[0]);
-        passwordArr.shift();
-        count++;
-      }
-    }
-
-    return passwordArr.toString().replace(/\,/g, "");
-  },
-
   comparePassword(
     password: string,
     encryptedPassword: string,
@@ -111,10 +111,7 @@ export const cryptography = {
     );
   },
 
-  validateToken(token: string, key: string = hashKey) {
-    const decripted = cryptography.decryptPassword(token, key);
-    const date = decripted.slice(decripted.length - 10);
-    const currentDate = new Date().toISOString().split("T")[0];
-    return date === currentDate;
+  validateToken(password: string, token: string) {
+    return cryptography.generateToken(password) === token ? true : false;
   },
 };
