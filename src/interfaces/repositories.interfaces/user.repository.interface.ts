@@ -9,6 +9,8 @@ export interface UserRepositoryInterface {
 
   getUserById(userId: string): Promise<unknown> | UserInterface;
 
+  getUserByEmail(userEmail: string): Promise<unknown> | UserInterface;
+
   deleteUser(userId: string): Promise<unknown> | UserInterface;
 
   updateUser(
