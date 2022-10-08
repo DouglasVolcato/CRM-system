@@ -33,6 +33,15 @@ export class UserRepository {
     });
   }
 
+  getUserByEmail(userEmail: string) {
+    return new Promise((resolve) => {
+      const foundUser = users.filter(
+        (user: UserInterface) => user.email === userEmail
+      );
+      resolve(foundUser[0]);
+    });
+  }
+
   deleteUser(userId: string) {
     return new Promise((resolve) => {
       const foundUser: UserInterface[] = [];
