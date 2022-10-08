@@ -17,6 +17,10 @@ export interface UserServicesInterface {
     execute(userId: string): Promise<unknown> | UserInterface;
   };
 
+  getUserByEmailUseCase: {
+    execute(userId: string): Promise<unknown> | UserInterface;
+  };
+
   getUserByNameUseCase: {
     execute(userName: string): Promise<unknown> | UserInterface[];
   };
