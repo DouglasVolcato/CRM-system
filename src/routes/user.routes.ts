@@ -33,6 +33,11 @@ export class UserRoutes {
     ) {
       this.controller.getUserByIdController(this.req, this.res);
     } else if (
+      this.router.includes("/users/find-user-by-email/") &&
+      this.req.method === "GET"
+    ) {
+      this.controller.getUserByEmailController(this.req, this.res);
+    } else if (
       this.router === "/users/find-all-users" &&
       this.req.method === "GET"
     ) {
