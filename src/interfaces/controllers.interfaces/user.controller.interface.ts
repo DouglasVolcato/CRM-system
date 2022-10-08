@@ -21,6 +21,11 @@ export interface UserControllerInterface {
     res: http.ServerResponse
   ): Promise<unknown> | http.ServerResponse;
 
+  getUserByEmailController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): Promise<unknown> | http.ServerResponse;
+
   getUserByNameController(
     req: http.IncomingMessage,
     res: http.ServerResponse
