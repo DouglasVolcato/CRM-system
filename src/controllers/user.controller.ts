@@ -31,10 +31,23 @@ export class UserController {
           password,
         };
 
-        const newUser = await this.services.createUserUsecase.execute(userObj);
+        try {
+          await this.services.getUserByEmailUseCase.execute(email);
 
-        res.writeHead(201, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(newUser));
+          res.writeHead(400, {
+            "Content-Type": "application/json",
+          });
+          return res.end(
+            JSON.stringify({ Message: "Email already registered." })
+          );
+        } catch (err) {
+          const newUser = await this.services.createUserUsecase.execute(
+            userObj
+          );
+
+          res.writeHead(201, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify(newUser));
+        }
       } catch (err) {
         res.writeHead(statusCodeGenerator(err), {
           "Content-Type": "application/json",
