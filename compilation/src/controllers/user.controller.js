@@ -31,9 +31,18 @@ class UserController {
                         email,
                         password,
                     };
-                    const newUser = yield this.services.createUserUsecase.execute(userObj);
-                    res.writeHead(201, { "Content-Type": "application/json" });
-                    return res.end(JSON.stringify(newUser));
+                    try {
+                        yield this.services.getUserByEmailUseCase.execute(email);
+                        res.writeHead(400, {
+                            "Content-Type": "application/json",
+                        });
+                        return res.end(JSON.stringify({ Message: "Email already registered." }));
+                    }
+                    catch (err) {
+                        const newUser = yield this.services.createUserUsecase.execute(userObj);
+                        res.writeHead(201, { "Content-Type": "application/json" });
+                        return res.end(JSON.stringify(newUser));
+                    }
                 }
                 catch (err) {
                     res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {

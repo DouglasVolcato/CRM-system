@@ -16,12 +16,12 @@ function authMiddleware(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const token = req.headers.authorization;
         if (!token) {
-            res.writeHead(400, { "Content-Type": "application/json" });
+            res.writeHead(498, { "Content-Type": "application/json" });
             return res.end(JSON.stringify({ message: "Invalid token." }));
         }
         const tokenValidation = yield new auth_services_index_1.ValidateTokenUseCase(new user_repository_1.UserRepository()).execute(token);
         if (!tokenValidation) {
-            res.writeHead(400, { "Content-Type": "application/json" });
+            res.writeHead(498, { "Content-Type": "application/json" });
             return res.end(JSON.stringify({ message: "Invalid token." }));
         }
         req.headers = { authorization: "authorized" };
