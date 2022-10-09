@@ -9,7 +9,7 @@ export async function authMiddleware(
   const token = req.headers.authorization;
 
   if (!token) {
-    res.writeHead(400, { "Content-Type": "application/json" });
+    res.writeHead(498, { "Content-Type": "application/json" });
     return res.end(JSON.stringify({ message: "Invalid token." }));
   }
 
@@ -18,7 +18,7 @@ export async function authMiddleware(
   ).execute(token);
 
   if (!tokenValidation) {
-    res.writeHead(400, { "Content-Type": "application/json" });
+    res.writeHead(498, { "Content-Type": "application/json" });
     return res.end(JSON.stringify({ message: "Invalid token." }));
   }
 
