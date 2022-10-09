@@ -25,7 +25,7 @@ export class AuthController {
         const generatedToken =
           this.services.generateTokenUseCase.execute(email);
 
-        res.writeHead(201, { "Content-Type": "application/json" });
+        res.writeHead(202, { "Content-Type": "application/json" });
         return res.end(JSON.stringify({ token: generatedToken }));
       } catch (err) {
         res.writeHead(statusCodeGenerator(err), {

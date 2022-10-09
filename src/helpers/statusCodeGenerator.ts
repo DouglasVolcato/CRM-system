@@ -1,6 +1,6 @@
 export function statusCodeGenerator(err: any): number {
   const referenceErr = err.toString().toLowerCase();
-  if (referenceErr.includes("missing")) {
+  if (referenceErr.includes("missing") || referenceErr.includes("invalid")) {
     return 400;
   } else if (
     referenceErr.includes("not found") ||
