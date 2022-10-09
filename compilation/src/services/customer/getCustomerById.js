@@ -16,7 +16,6 @@ class GetCustomerByIdUseCase {
     }
     execute(customerId) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log({ id: customerId });
             const foundCustomer = yield this.repository.getCustomerById(customerId);
             if (foundCustomer === undefined) {
                 throw new Error("Customer not found.");
