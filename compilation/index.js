@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const customer_factory_1 = require("./src/factories/customer.factory");
 const user_factory_1 = require("./src/factories/user.factory");
+const auth_factory_1 = require("./src/factories/auth.factory");
 const envVariables_1 = require("./src/config/envVariables");
 const http = __importStar(require("http"));
 const { port } = (0, envVariables_1.envVariables)();
@@ -35,6 +36,9 @@ const server = http.createServer((req, res) => {
     }
     else if (router === null || router === void 0 ? void 0 : router.includes("/customers/")) {
         (0, customer_factory_1.makeCustomerFactory)(router, req, res);
+    }
+    else if (router === null || router === void 0 ? void 0 : router.includes("/auth")) {
+        (0, auth_factory_1.makeAuthFactory)(router, req, res);
     }
     else {
         res.writeHead(400, { "Content-Type": "application/json" });
