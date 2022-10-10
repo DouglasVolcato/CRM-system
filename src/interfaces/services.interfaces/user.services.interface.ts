@@ -2,33 +2,30 @@ import { UserInterface } from "../entities.interfaces/user.interface";
 
 export interface UserServicesInterface {
   createUserUsecase: {
-    execute(userBody: UserInterface): Promise<unknown> | UserInterface;
+    execute(userBody: UserInterface): Promise<UserInterface>;
   };
 
   deleteUserUsecase: {
-    execute(userId: string): Promise<unknown> | UserInterface;
+    execute(userId: string): Promise<UserInterface>;
   };
 
   getAllUserUseCase: {
-    execute(): Promise<unknown> | UserInterface[];
+    execute(): Promise<UserInterface[]>;
   };
 
   getUserByIdUseCase: {
-    execute(userId: string): Promise<unknown> | UserInterface;
+    execute(userId: string): Promise<UserInterface>;
   };
 
   getUserByEmailUseCase: {
-    execute(userId: string): Promise<unknown> | UserInterface;
+    execute(userEmail: string): Promise<UserInterface>;
   };
 
   getUserByNameUseCase: {
-    execute(userName: string): Promise<unknown> | UserInterface[];
+    execute(userName: string): Promise<UserInterface[]>;
   };
 
   updateUserUseCase: {
-    execute(
-      userId: string,
-      userBody: UserInterface
-    ): Promise<unknown> | UserInterface;
+    execute(userId: string, userBody: UserInterface): Promise<UserInterface>;
   };
 }
