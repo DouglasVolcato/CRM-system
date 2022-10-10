@@ -9,7 +9,7 @@ export class CreateCustomerUseCase {
     this.repository = repository;
   }
 
-  async execute(customerBody: CustomerInterface) {
+  async execute(customerBody: CustomerInterface): Promise<CustomerInterface> {
     const body = new Customer(customerBody);
     body.validate();
     const createCustomer = await this.repository.createCustomer(
