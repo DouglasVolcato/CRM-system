@@ -9,7 +9,10 @@ export class UpdateUserUseCase {
     this.repository = repository;
   }
 
-  async execute(userId: string, userBody: UserInterface) {
+  async execute(
+    userId: string,
+    userBody: UserInterface
+  ): Promise<UserInterface> {
     const foundUser: any = await this.repository.getUserById(userId);
     if (foundUser === undefined) {
       throw new Error("User not found.");
