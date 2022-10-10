@@ -9,7 +9,7 @@ export class CreateUserUsecase {
     this.repository = repository;
   }
 
-  async execute(userBody: UserInterface) {
+  async execute(userBody: UserInterface): Promise<UserInterface> {
     const body = new User(userBody);
     body.validate();
     const newUser = await this.repository.createUser(body.getUser());
