@@ -1,3 +1,4 @@
+import { UserInterface } from "../../interfaces/entities.interfaces/user.interface";
 import { UserRepositoryInterface } from "../../interfaces/repositories.interfaces/user.repository.interface";
 
 export class GetUserByIdUseCase {
@@ -7,7 +8,7 @@ export class GetUserByIdUseCase {
     this.repository = repository;
   }
 
-  async execute(userId: string) {
+  async execute(userId: string): Promise<UserInterface> {
     const foundUser = await this.repository.getUserById(userId);
     if (foundUser === undefined) {
       throw new Error("User not found.");
