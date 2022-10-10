@@ -1,3 +1,4 @@
+import { UserInterface } from "../../interfaces/entities.interfaces/user.interface";
 import { UserRepositoryInterface } from "../../interfaces/repositories.interfaces/user.repository.interface";
 
 export class GetUserByNameUseCase {
@@ -7,8 +8,8 @@ export class GetUserByNameUseCase {
     this.repository = repository;
   }
 
-  async execute(userName: string) {
-    const foundUsers: any = await this.repository.getUserByName(userName);
+  async execute(userName: string): Promise<UserInterface[]> {
+    const foundUsers = await this.repository.getUserByName(userName);
     if (
       foundUsers === null ||
       foundUsers === undefined ||
