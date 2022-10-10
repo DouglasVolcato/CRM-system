@@ -5,8 +5,11 @@ import { envVariables } from "./src/config/envVariables";
 import * as http from "http";
 
 const { port } = envVariables();
-const server = http.createServer((req, res) => {
-  const router = req.url;
+const server: http.Server<
+  typeof http.IncomingMessage,
+  typeof http.ServerResponse
+> = http.createServer((req, res) => {
+  const router: string | undefined = req.url;
 
   if (router?.includes("/users/")) {
     makeUserFactory(router, req, res);
