@@ -19,7 +19,7 @@ export class AuthRoutes {
     this.res = res;
   }
 
-  route() {
+  route(): void | http.ServerResponse {
     if (this.router === "/auth/login" && this.req.method === "POST") {
       this.controller.loginController(this.req, this.res);
     } else {
