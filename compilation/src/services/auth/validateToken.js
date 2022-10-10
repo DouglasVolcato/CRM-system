@@ -18,8 +18,12 @@ class ValidateTokenUseCase {
     }
     execute(userToken) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (userToken.split(" ")[0] !== "Bearer") {
+                return false;
+            }
+            const token = userToken.replace("Bearer ", "");
             for (let user of user_1.users) {
-                if (cryptography_1.cryptography.generateToken(user.email) === userToken) {
+                if (cryptography_1.cryptography.generateToken(user.email) === token) {
                     return true;
                 }
             }

@@ -22,33 +22,45 @@ class CustomerRoutes {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.router === "/customers/create-customer" &&
                 this.req.method === "POST") {
-                yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
-                this.controller.createCustomerController(this.req, this.res);
+                const middleware = yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
+                if (middleware) {
+                    this.controller.createCustomerController(this.req, this.res);
+                }
             }
             else if (this.router.includes("/customers/delete-customer/") &&
                 this.req.method === "DELETE") {
-                yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
-                this.controller.deleteCustomerController(this.req, this.res);
+                const middleware = yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
+                if (middleware) {
+                    this.controller.deleteCustomerController(this.req, this.res);
+                }
             }
             else if (this.router.includes("/customers/find-customer-by-id/") &&
                 this.req.method === "GET") {
-                yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
-                this.controller.getCustomerByIdController(this.req, this.res);
+                const middleware = yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
+                if (middleware) {
+                    this.controller.getCustomerByIdController(this.req, this.res);
+                }
             }
             else if (this.router === "/customers/find-all-customers" &&
                 this.req.method === "GET") {
-                yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
-                this.controller.getAllCustomersController(this.req, this.res);
+                const middleware = yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
+                if (middleware) {
+                    this.controller.getAllCustomersController(this.req, this.res);
+                }
             }
             else if (this.router.includes("/customers/find-customers-by-name/") &&
                 this.req.method === "GET") {
-                yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
-                this.controller.getCustomerByNameController(this.req, this.res);
+                const middleware = yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
+                if (middleware) {
+                    this.controller.getCustomerByNameController(this.req, this.res);
+                }
             }
             else if (this.router.includes("/customers/update-customer/") &&
                 this.req.method === "PUT") {
-                yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
-                this.controller.updateCustomerController(this.req, this.res);
+                const middleware = yield (0, auth_middleware_1.authMiddleware)(this.req, this.res);
+                if (middleware) {
+                    this.controller.updateCustomerController(this.req, this.res);
+                }
             }
             else {
                 this.res.writeHead(400, { "Content-Type": "application/json" });

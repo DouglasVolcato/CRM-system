@@ -23,7 +23,7 @@ class UserController {
             });
             return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const { id, name, username, email, password } = yield JSON.parse(body);
+                    const { id, name, username, email, password, } = yield JSON.parse(body);
                     const userObj = {
                         id,
                         name,
@@ -164,7 +164,7 @@ class UserController {
                     body += chunk.toString();
                 });
                 return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
-                    const { id, name, username, email, password } = yield JSON.parse(body);
+                    const { id, name, username, email, password, } = yield JSON.parse(body);
                     const userObj = {
                         id,
                         name,

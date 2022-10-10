@@ -17,15 +17,17 @@ function authMiddleware(req, res) {
         const token = req.headers.authorization;
         if (!token) {
             res.writeHead(498, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify({ message: "Invalid token." }));
+            res.end(JSON.stringify({ message: "Invalid token." }));
+            return false;
         }
         const tokenValidation = yield new auth_services_index_1.ValidateTokenUseCase(new user_repository_1.UserRepository()).execute(token);
         if (!tokenValidation) {
             res.writeHead(498, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify({ message: "Invalid token." }));
+            res.end(JSON.stringify({ message: "Invalid token." }));
+            return false;
         }
         req.headers = { authorization: "authorized" };
-        return;
+        return true;
     });
 }
 exports.authMiddleware = authMiddleware;

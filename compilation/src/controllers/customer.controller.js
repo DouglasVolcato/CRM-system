@@ -23,12 +23,12 @@ class CustomerController {
             });
             return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const { id, name, age, phone, city, notes } = yield JSON.parse(body);
+                    const { id, name, age, phone, city, notes, } = yield JSON.parse(body);
                     const customerObj = {
                         id,
                         name,
-                        age,
-                        phone,
+                        age: Number(age),
+                        phone: Number(phone),
                         city,
                         notes,
                     };
@@ -74,7 +74,9 @@ class CustomerController {
                 return res.end(JSON.stringify(foundCustomers));
             }
             catch (err) {
-                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                    "Content-Type": "application/json",
+                });
                 return res.end(JSON.stringify({ Message: "Error finding customers: " + err }));
             }
         });
@@ -93,7 +95,9 @@ class CustomerController {
                 return res.end(JSON.stringify({ message: "Invalid url." }));
             }
             catch (err) {
-                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                    "Content-Type": "application/json",
+                });
                 return res.end(JSON.stringify({ message: "Error finding customer: " + err }));
             }
         });
@@ -111,7 +115,9 @@ class CustomerController {
                 return res.end(JSON.stringify({ message: "Invalid url." }));
             }
             catch (err) {
-                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
+                res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                    "Content-Type": "application/json",
+                });
                 return res.end(JSON.stringify({ Message: "Error finding customer: " + err }));
             }
         });
@@ -126,12 +132,12 @@ class CustomerController {
                     body += chunk.toString();
                 });
                 return req.on("end", () => __awaiter(this, void 0, void 0, function* () {
-                    const { id, name, age, phone, city, notes } = yield JSON.parse(body);
+                    const { id, name, age, phone, city, notes, } = yield JSON.parse(body);
                     const customerObj = {
                         id,
                         name,
-                        age,
-                        phone,
+                        age: Number(age),
+                        phone: Number(phone),
                         city,
                         notes,
                     };
@@ -141,7 +147,9 @@ class CustomerController {
                         return res.end(JSON.stringify(updatedCustomer));
                     }
                     catch (err) {
-                        res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), { "Content-Type": "application/json" });
+                        res.writeHead((0, statusCodeGenerator_1.statusCodeGenerator)(err), {
+                            "Content-Type": "application/json",
+                        });
                         return res.end(JSON.stringify({ Message: "Error updating customer: " + err }));
                     }
                 }));
