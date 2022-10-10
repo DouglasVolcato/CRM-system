@@ -2,7 +2,7 @@
 
 ## Commands
 - ### Install devDependencies: `npm install`
-- ### Run project: `npm run start`
+- ### Run project: Add `.env` PORT and ENCRYPT_KEY variables, then use the command `npm run start`
 
 ## Routes
 - ### POST: `/users/create-user`
