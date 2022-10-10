@@ -8,10 +8,11 @@ export class UpdateCustomerUseCase {
     this.repository = repository;
   }
 
-  async execute(customerId: string, customerBody: CustomerInterface) {
-    const foundCustomer: any = await this.repository.getCustomerById(
-      customerId
-    );
+  async execute(
+    customerId: string,
+    customerBody: CustomerInterface
+  ): Promise<CustomerInterface> {
+    const foundCustomer = await this.repository.getCustomerById(customerId);
 
     if (foundCustomer === undefined) {
       throw new Error("Customer not found.");
