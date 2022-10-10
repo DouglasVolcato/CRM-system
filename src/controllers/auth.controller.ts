@@ -9,7 +9,10 @@ export class AuthController {
     this.services = services;
   }
 
-  async loginController(req: http.IncomingMessage, res: http.ServerResponse) {
+  async loginController(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -18,7 +21,8 @@ export class AuthController {
 
     return req.on("end", async () => {
       try {
-        const { email, password } = await JSON.parse(body);
+        const { email, password }: { email: string; password: string } =
+          await JSON.parse(body);
 
         await this.services.comparePasswordUseCase.execute(password, email);
 
