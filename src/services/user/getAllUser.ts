@@ -1,3 +1,4 @@
+import { UserInterface } from "../../interfaces/entities.interfaces/user.interface";
 import { UserRepositoryInterface } from "../../interfaces/repositories.interfaces/user.repository.interface";
 
 export class GetAllUserUseCase {
@@ -7,8 +8,8 @@ export class GetAllUserUseCase {
     this.repository = repository;
   }
 
-  async execute() {
-    const foundUsers: any = await this.repository.getAllUsers();
+  async execute(): Promise<UserInterface[]> {
+    const foundUsers = await this.repository.getAllUsers();
     if (
       foundUsers === null ||
       foundUsers === undefined ||
