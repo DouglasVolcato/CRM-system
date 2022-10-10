@@ -32,7 +32,7 @@ const letters = [
 ];
 
 export const cryptography = {
-  encryptPassword(password: string, refKey: string = hashKey) {
+  encryptPassword(password: string, refKey: string = hashKey): string {
     const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const encryptKey = [];
     const passwordArr = [];
@@ -98,20 +98,20 @@ export const cryptography = {
     password: string,
     encryptedPassword: string,
     key: string = hashKey
-  ) {
+  ): boolean {
     return cryptography.encryptPassword(password, key) === encryptedPassword
       ? true
       : false;
   },
 
-  generateToken(userEmail: string, key: string = hashKey) {
+  generateToken(userEmail: string, key: string = hashKey): string {
     return cryptography.encryptPassword(
       userEmail + new Date().toISOString().split("T")[0],
       key
     );
   },
 
-  validateToken(userEmail: string, token: string) {
+  validateToken(userEmail: string, token: string): boolean {
     return cryptography.generateToken(userEmail) === token ? true : false;
   },
 };
