@@ -2,20 +2,20 @@ import { UserInterface } from "../interfaces/entities.interfaces/user.interface"
 import { users } from "../mocks/user";
 
 export class UserRepository {
-  createUser(userBody: UserInterface) {
+  createUser(userBody: UserInterface): Promise<UserInterface> {
     return new Promise((resolve) => {
       users.push(userBody);
       resolve(userBody);
     });
   }
 
-  getAllUsers() {
+  getAllUsers(): Promise<UserInterface[]> {
     return new Promise((resolve) => {
       resolve(users);
     });
   }
 
-  getUserByName(userName: string) {
+  getUserByName(userName: string): Promise<UserInterface[]> {
     return new Promise((resolve) => {
       const foundUser = users.filter((user: UserInterface) =>
         user.name.includes(userName)
@@ -24,7 +24,7 @@ export class UserRepository {
     });
   }
 
-  getUserById(userId: string) {
+  getUserById(userId: string): Promise<UserInterface> {
     return new Promise((resolve) => {
       const foundUser = users.filter(
         (user: UserInterface) => user.id === userId
@@ -33,7 +33,7 @@ export class UserRepository {
     });
   }
 
-  getUserByEmail(userEmail: string) {
+  getUserByEmail(userEmail: string): Promise<UserInterface> {
     return new Promise((resolve) => {
       const foundUser = users.filter(
         (user: UserInterface) => user.email === userEmail
@@ -42,7 +42,7 @@ export class UserRepository {
     });
   }
 
-  deleteUser(userId: string) {
+  deleteUser(userId: string): Promise<UserInterface> {
     return new Promise((resolve) => {
       const foundUser: UserInterface[] = [];
       users.map((user: UserInterface, index: number) => {
@@ -55,7 +55,7 @@ export class UserRepository {
     });
   }
 
-  updateUser(userId: string, userBody: UserInterface) {
+  updateUser(userId: string, userBody: UserInterface): Promise<UserInterface> {
     return new Promise((resolve) => {
       const foundUser: UserInterface[] = [];
       users.map((user: UserInterface, index: number) => {
