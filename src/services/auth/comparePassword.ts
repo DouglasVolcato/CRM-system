@@ -9,7 +9,7 @@ export class ComparePasswordUseCase {
   }
 
   async execute(userPassword: string, userEmail: string): Promise<boolean> {
-    const foundUser: any = await this.repository.getUserByEmail(userEmail);
+    const foundUser = await this.repository.getUserByEmail(userEmail);
 
     if (!foundUser) {
       throw new Error("User not found.");
