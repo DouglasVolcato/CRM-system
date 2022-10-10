@@ -19,7 +19,7 @@ export class UserRoutes {
     this.res = res;
   }
 
-  route() {
+  route(): void | http.ServerResponse {
     if (this.router === "/users/create-user" && this.req.method === "POST") {
       this.controller.createUserController(this.req, this.res);
     } else if (
