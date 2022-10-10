@@ -2,20 +2,20 @@ import { CustomerInterface } from "../interfaces/entities.interfaces/customer.in
 import { customers } from "../mocks/customers";
 
 export class CustomerRepository {
-  createCustomer(customerBody: CustomerInterface) {
+  createCustomer(customerBody: CustomerInterface): Promise<CustomerInterface> {
     return new Promise((resolve) => {
       customers.push(customerBody);
       resolve(customerBody);
     });
   }
 
-  getAllCustomers() {
+  getAllCustomers(): Promise<CustomerInterface[]> {
     return new Promise((resolve) => {
       resolve(customers);
     });
   }
 
-  getCustomerByName(customerName: string) {
+  getCustomerByName(customerName: string): Promise<CustomerInterface[]> {
     return new Promise((resolve) => {
       const foundCustomer = customers.filter((customer: CustomerInterface) =>
         customer.name.includes(customerName)
@@ -24,7 +24,7 @@ export class CustomerRepository {
     });
   }
 
-  getCustomerById(customerId: string) {
+  getCustomerById(customerId: string): Promise<CustomerInterface> {
     return new Promise((resolve) => {
       const foundCustomer = customers.filter(
         (customer: CustomerInterface) => customer.id === customerId
@@ -33,7 +33,7 @@ export class CustomerRepository {
     });
   }
 
-  deleteCustomer(customerId: string) {
+  deleteCustomer(customerId: string): Promise<CustomerInterface> {
     return new Promise((resolve) => {
       const foundCustomer: CustomerInterface[] = [];
       customers.map((customer: CustomerInterface, index: number) => {
@@ -46,7 +46,10 @@ export class CustomerRepository {
     });
   }
 
-  updateCustomer(customerId: string, customerBody: CustomerInterface) {
+  updateCustomer(
+    customerId: string,
+    customerBody: CustomerInterface
+  ): Promise<CustomerInterface> {
     return new Promise((resolve) => {
       const foundCustomer: CustomerInterface[] = [];
       customers.map((customer: CustomerInterface, index: number) => {
