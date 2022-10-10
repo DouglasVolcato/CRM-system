@@ -1,3 +1,4 @@
+import { UserInterface } from "../../interfaces/entities.interfaces/user.interface";
 import { UserRepositoryInterface } from "../../interfaces/repositories.interfaces/user.repository.interface";
 
 export class DeleteUserUsecase {
@@ -7,7 +8,7 @@ export class DeleteUserUsecase {
     this.repository = repository;
   }
 
-  async execute(userId: string) {
+  async execute(userId: string): Promise<UserInterface> {
     const deletedUser = await this.repository.deleteUser(userId);
     if (deletedUser === undefined) {
       throw new Error("User not found to delete.");
