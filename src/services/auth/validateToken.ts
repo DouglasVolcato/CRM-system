@@ -10,8 +10,13 @@ export class ValidateTokenUseCase {
   }
 
   async execute(userToken: string): Promise<boolean> {
+    if (userToken.split(" ")[0] !== "Bearer") {
+      return false;
+    }
+
+    const token: string = userToken.replace("Bearer ", "");
     for (let user of users) {
-      if (cryptography.generateToken(user.email) === userToken) {
+      if (cryptography.generateToken(user.email) === token) {
         return true;
       }
     }
