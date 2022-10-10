@@ -1,3 +1,4 @@
+import { CustomerInterface } from "../../interfaces/entities.interfaces/customer.interface";
 import { CustomerRepositoryInterface } from "../../interfaces/repositories.interfaces/customer.repository.interface";
 
 export class GetAllCustomerUseCase {
@@ -7,8 +8,8 @@ export class GetAllCustomerUseCase {
     this.repository = repository;
   }
 
-  async execute() {
-    const foundCustomers: any = await this.repository.getAllCustomers();
+  async execute(): Promise<CustomerInterface[]> {
+    const foundCustomers = await this.repository.getAllCustomers();
     if (
       foundCustomers === null ||
       foundCustomers === undefined ||
