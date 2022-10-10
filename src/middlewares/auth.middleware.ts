@@ -5,12 +5,13 @@ import { ValidateTokenUseCase } from "../services/auth.services.index";
 export async function authMiddleware(
   req: http.IncomingMessage,
   res: http.ServerResponse
-): Promise<void | http.ServerResponse<http.IncomingMessage>> {
-  const token = req.headers.authorization;
+): Promise<void | boolean> {
+  const token: string | undefined = req.headers.authorization;
 
   if (!token) {
     res.writeHead(498, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify({ message: "Invalid token." }));
+    res.end(JSON.stringify({ message: "Invalid token." }));
+    return false;
   }
 
   const tokenValidation = await new ValidateTokenUseCase(
@@ -19,10 +20,10 @@ export async function authMiddleware(
 
   if (!tokenValidation) {
     res.writeHead(498, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify({ message: "Invalid token." }));
+    res.end(JSON.stringify({ message: "Invalid token." }));
+    return false;
   }
 
   req.headers = { authorization: "authorized" };
-
-  return;
+  return true;
 }
