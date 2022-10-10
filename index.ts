@@ -8,7 +8,7 @@ const { port } = envVariables();
 const server: http.Server<
   typeof http.IncomingMessage,
   typeof http.ServerResponse
-> = http.createServer((req, res) => {
+> = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
   const router: string | undefined = req.url;
 
   if (router?.includes("/users/")) {
