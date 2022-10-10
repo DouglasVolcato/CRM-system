@@ -12,7 +12,7 @@ export class UserController {
   async createUserController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
     let body = "";
 
     req.on("data", (chunk: any) => {
@@ -21,7 +21,19 @@ export class UserController {
 
     return req.on("end", async () => {
       try {
-        const { id, name, username, email, password } = await JSON.parse(body);
+        const {
+          id,
+          name,
+          username,
+          email,
+          password,
+        }: {
+          id: string;
+          name: string;
+          username: string;
+          email: string;
+          password: string;
+        } = await JSON.parse(body);
 
         const userObj = {
           id,
@@ -62,9 +74,12 @@ export class UserController {
   async deleteUserController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
     try {
-      const id = req.url?.replace("/users/delete-user/", "");
+      const id: string | undefined = req.url?.replace(
+        "/users/delete-user/",
+        ""
+      );
       if (id) {
         const deletedUser = await this.services.deleteUserUsecase.execute(id);
         res.writeHead(200, { "Content-Type": "application/json" });
@@ -86,7 +101,7 @@ export class UserController {
   async getAllUsersController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
     try {
       const foundUsers = await this.services.getAllUserUseCase.execute();
       res.writeHead(302, { "Content-Type": "application/json" });
@@ -104,8 +119,11 @@ export class UserController {
   async getUserByIdController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
-    const id = req.url?.replace("/users/find-user-by-id/", "");
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
+    const id: string | undefined = req.url?.replace(
+      "/users/find-user-by-id/",
+      ""
+    );
     try {
       if (id) {
         const foundUser = await this.services.getUserByIdUseCase.execute(id);
@@ -125,8 +143,11 @@ export class UserController {
   async getUserByEmailController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
-    const email = req.url?.replace("/users/find-user-by-email/", "");
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
+    const email: string | undefined = req.url?.replace(
+      "/users/find-user-by-email/",
+      ""
+    );
 
     try {
       if (email) {
@@ -149,7 +170,7 @@ export class UserController {
   async getUserByNameController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
     try {
       if (req.url) {
         const name = req.url?.replace("/users/find-users-by-name/", "");
@@ -172,8 +193,11 @@ export class UserController {
   async updateUserController(
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) {
-    const userId = req.url?.replace("/users/update-user/", "");
+  ): Promise<http.IncomingMessage | http.ServerResponse> {
+    const userId: string | undefined = req.url?.replace(
+      "/users/update-user/",
+      ""
+    );
     let body = "";
 
     if (userId) {
@@ -182,7 +206,19 @@ export class UserController {
       });
 
       return req.on("end", async () => {
-        const { id, name, username, email, password } = await JSON.parse(body);
+        const {
+          id,
+          name,
+          username,
+          email,
+          password,
+        }: {
+          id: string;
+          name: string;
+          username: string;
+          email: string;
+          password: string;
+        } = await JSON.parse(body);
 
         const userObj = {
           id,
