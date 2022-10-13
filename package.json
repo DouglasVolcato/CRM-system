@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -w",
-    "dev": "nodemon ./compilation/index.js",
+    "build": "tsc",
     "start": "node ./compilation/index.js"
   },
   "repository": {
@@ -20,7 +19,6 @@
   },
   "homepage": "https://github.com/DouglasVolcato/CRM-system#readme",
   "devDependencies": {
-    "@types/node": "^18.8.2",
-    "nodemon": "^2.0.20"
+    "@types/node": "^18.8.2"
   }
 }
