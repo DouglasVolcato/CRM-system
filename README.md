@@ -2,9 +2,9 @@
 
 ## How to run this project:
 - ### Install "@types/node": `npm install`
-- ### Create e `.env` file and add PORT and ENCRYPT_KEY variables, 
-- ### Compile the project to JavaScript: `npm run build`, 
-- ### Start the project: `npm run start`, 
+- ### Create e `.env` file and add PORT and ENCRYPT_KEY variables
+- ### Compile the project to JavaScript: `npm run build`
+- ### Start the project: `npm run start`
 
 ## Routes:
 - ### POST: `/users/create-user`
