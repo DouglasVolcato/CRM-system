@@ -1,10 +1,12 @@
 # CRM-system
 
-## Commands
-- ### Install devDependencies: `npm install`
-- ### Run project: Add `.env` PORT and ENCRYPT_KEY variables, then use the command `npm run start`
+## How to run this project:
+- ### Install "@types/node": `npm install`
+- ### Create e `.env` file and add PORT and ENCRYPT_KEY variables, 
+- ### Compile the project to JavaScript: `npm run build`, 
+- ### Start the project: `npm run start`, 
 
-## Routes
+## Routes:
 - ### POST: `/users/create-user`
 #### Example request-body: {"name": "Douglas", "username": "DouglasVolcato", "email": "douglasvolcato@gmail.com", "password": "teste123"}
 - ### PUT: `/users/update-user/:id`
